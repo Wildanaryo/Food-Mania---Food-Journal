@@ -1,22 +1,23 @@
 import Head from "next/head";
 import { FoodContext } from "@/context/FoodProvider";
 import { useContext, useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
-  const { isAuth, onLogout, getFood, dataFood } = useContext(FoodContext);
+  const { setDataFood, getFood, dataFood } = useContext(FoodContext);
+
+  const fetchFood = async () => {
+    try {
+      const foods = await getFood();
+      setDataFood(foods);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    getFood();
+    fetchFood();
   }, []);
-
-  const handleLogin = () => {
-    getFood();
-    // onLogin();
-  };
-
-  const handleLogout = () => {
-    onLogout();
-  };
 
   // if (typeof window !== "undefined") {
   //   const itemToken = localStorage.getItem("token");
@@ -30,8 +31,6 @@ export default function Home() {
     }
     return result.join(" ");
   }
-
-  console.log(formatName("nasi uduk"));
 
   return (
     <div
@@ -53,22 +52,27 @@ export default function Home() {
           <h2 className="hover:border-b-2 xl:block hidden">GLUTEN-FREE</h2>
           <h2 className="hover:border-b-2 sm:block hidden">DESERT</h2>
         </div>
+        <Link href={`/foods/create-food/`}>
+          <button className="bg-blue-500 px-4 py-2 rounded">Create Food</button>
+        </Link>
+
         {dataFood
-          ? dataFood.map((item, index) => (
-              <div key={index} className="w-full">
-                <div className="w-full grid place-items-center">
+          ? dataFood.map((food, index) => (
+              <div key={index} className="w-full grid place-items-center">
+                <Link
+                  href={`/foods/${food.id}`}
+                  className="grid place-items-center w-[60%]"
+                >
                   <img
-                    className="w-[60%]"
+                    className="w-full"
                     key={index}
-                    src={item.imageUrl}
-                    alt={item.description}
+                    src={food.imageUrl}
+                    alt={food.description}
                   />
-                </div>
-                <div className="w-full">
                   <h1 className="text-center text-3xl">
-                    {formatName(item.name)}
+                    {formatName(food.name)}
                   </h1>
-                </div>
+                </Link>
               </div>
             ))
           : null}
