@@ -1,9 +1,22 @@
 import axios from "axios";
 
-export const deleteFood = async (foodId) => {
+export const UpdateFood = async (
+  nameFood,
+  descFood,
+  ingreFood,
+  imgFood,
+  foodId
+) => {
   try {
-    const res = await axios.delete(
-      `https://api-bootcamp.do.dibimbing.id/api/v1/delete-food/${foodId}`,
+    const requestBody = {
+      name: nameFood,
+      description: descFood,
+      imageUrl: imgFood,
+      ingredients: [`${ingreFood}`],
+    };
+    const res = await axios.post(
+      `https://api-bootcamp.do.dibimbing.id/api/v1/update-food/${foodId}`,
+      requestBody,
       {
         headers: {
           apiKey: "w05KkI9AWhKxzvPFtXotUva-",

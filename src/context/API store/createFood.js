@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export const createFood = async (nameFood, descFood, imgFood) => {
+export const createFood = async (nameFood, descFood, ingreFood, imgFood) => {
   try {
     const requestBody = {
       name: nameFood,
       description: descFood,
       imageUrl: imgFood,
-      ingredients: ["chicken"],
+      ingredients: [ingreFood],
     };
     const res = await axios.post(
       `https://api-bootcamp.do.dibimbing.id/api/v1/create-food`,

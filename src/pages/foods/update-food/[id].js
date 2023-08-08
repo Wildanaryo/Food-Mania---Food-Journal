@@ -1,23 +1,17 @@
 import { FoodContext } from "@/context/FoodProvider";
+import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 
-export default function CreateFood() {
-  const { createFood } = useContext(FoodContext);
-
-  const [nameFood, setNameFood] = useState("");
-  const [imgFood, setImgFood] = useState("");
-  const [descFood, setDescFood] = useState("");
-  const [ingreFood, setIngreFood] = useState("");
-
+const UpdateFood = ({ food }) => {
+  const { UpdateFood } = useContext(FoodContext);
   const router = useRouter();
 
-  const handleCreateFood = async (event) => {
-    event.preventDefault();
-    await createFood(formatName(nameFood), descFood, ingreFood, imgFood);
-    router.push(`/`);
-  };
+  const [nameFood, setNameFood] = useState(food.name);
+  const [imgFood, setImgFood] = useState(food.imageUrl);
+  const [descFood, setDescFood] = useState(food.description);
+  const [ingreFood, setIngreFood] = useState(food.ingredients);
 
   function formatName(params) {
     const result = params.toLowerCase().split(" ");
@@ -27,15 +21,30 @@ export default function CreateFood() {
     return result.join(" ");
   }
 
-  console.log(ingreFood);
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+    await UpdateFood(nameFood, descFood, [ingreFood], imgFood, food.id);
+    router.push(`/foods/${food.id}`);
+  };
 
+  const handleJumpHome = () => {
+    router.push("/");
+  };
+
+  console.log(food);
   return (
-    <div className="flex justify-center p-10">
+    <div className="p-20">
       <Head>
-        <title>Food Mania - Create Food</title>
+        <title>Food Mania - Update Food {formatName(food.name)}</title>
       </Head>
+      <button
+        className="bg-orange-800 px-4 py-2 rounded mt-20"
+        onClick={handleJumpHome}
+      >
+        Home
+      </button>
       <form className="w-[60%] border-4 p-4">
-        <div className="text-2xl text-center mb-6">Form Create Food</div>
+        <div className="text-2xl text-center mb-6">Form Update Food</div>
         <div className="mb-6">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Name Food
@@ -91,11 +100,32 @@ export default function CreateFood() {
         <button
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          onClick={handleCreateFood}
+          onClick={handleUpdate}
         >
           Submit
         </button>
       </form>
     </div>
   );
+};
+
+export async function getServerSideProps({ params }) {
+  const res = await axios.get(
+    `https://api-bootcamp.do.dibimbing.id/api/v1/foods/${params.id}`,
+    {
+      headers: {
+        apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pZnRhaGZhcmhhbkBnbWFpbC5jb20iLCJ1c2VySWQiOiJjYTIzZDdjYy02Njk1LTQzNGItODE2Yy03ZTlhNWMwNGMxNjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjE4NzUzMjF9.wV2OECzC25qNujtyb9YHyzYIbYEV-wud3TQsYv7oB4Q`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  console.log(params);
+  const data = await res.data.data;
+  console.log(data);
+  return {
+    props: { food: data },
+  };
 }
+
+export default UpdateFood;
