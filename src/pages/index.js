@@ -32,6 +32,7 @@ export default function Home() {
     return result.join(" ");
   }
 
+  console.log(dataFood[2]);
   return (
     <div
       className={`flex bg-black text-white min-h-screen flex-col items-center justify-between`}
