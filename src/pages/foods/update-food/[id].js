@@ -23,7 +23,13 @@ const UpdateFood = ({ food }) => {
 
   const handleUpdate = async (event) => {
     event.preventDefault();
-    await UpdateFood(nameFood, descFood, [ingreFood], imgFood, food.id);
+    await UpdateFood(
+      nameFood,
+      descFood,
+      formatIngredients(ingreFood),
+      imgFood,
+      food.id
+    );
     router.push(`/foods/${food.id}`);
   };
 
@@ -31,19 +37,32 @@ const UpdateFood = ({ food }) => {
     router.push("/");
   };
 
-  console.log(food);
+  function formatIngredients(params) {
+    const result = params.map((item) => {
+      const trimmedItem = item.trim(); // Menghapus spasi di awal dan akhir kata
+      const capitalizedItem =
+        trimmedItem.charAt(0).toUpperCase() +
+        trimmedItem.slice(1).toLowerCase();
+      return capitalizedItem;
+    });
+
+    return result; // Mengembalikan array yang telah diubah
+  }
+
   return (
-    <div className="p-20">
+    <div className="p-20 w-full flex flex-col items-center space-y-4">
       <Head>
         <title>Food Mania - Update Food {formatName(food.name)}</title>
       </Head>
-      <button
-        className="bg-orange-800 px-4 py-2 rounded mt-20"
-        onClick={handleJumpHome}
-      >
-        Home
-      </button>
-      <form className="w-[60%] border-4 p-4">
+      <div className="flex flex-col items-start w-1/2">
+        <button
+          className="bg-orange-800 px-4 py-2 rounded w-40"
+          onClick={handleJumpHome}
+        >
+          Home
+        </button>
+      </div>
+      <form className="w-[50%] border-4 p-4">
         <div className="text-2xl text-center mb-6">Form Update Food</div>
         <div className="mb-6">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -62,10 +81,10 @@ const UpdateFood = ({ food }) => {
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Description
           </label>
-          <input
+          <textarea
             type="text"
             value={descFood}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 h-40 border border-gray-300 text-gray-900 text-sm min-h-min rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Description"
             onChange={(e) => setDescFood(e.target.value)}
             required
@@ -79,7 +98,7 @@ const UpdateFood = ({ food }) => {
             type="text"
             value={ingreFood}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Description"
+            placeholder="Ingredients"
             onChange={(e) => setIngreFood(e.target.value)}
             required
           />

@@ -2,10 +2,11 @@ import { FoodContext } from "@/context/FoodProvider";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const FoodDetails = ({ food }) => {
-  const { deleteFood } = useContext(FoodContext);
+  const { deleteFood, dataFood, setDataFood, getFood } =
+    useContext(FoodContext);
   const [showDelete, setShowDelete] = useState(false);
   const router = useRouter();
 
@@ -16,6 +17,20 @@ const FoodDetails = ({ food }) => {
     }
     return result.join(" ");
   }
+
+  const fetchFood = async () => {
+    try {
+      const foods = await getFood();
+      setDataFood(foods);
+      console.log(dataFood);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFood();
+  }, []);
 
   const handleDelete = async () => {
     await deleteFood(food.id);
@@ -45,30 +60,39 @@ const FoodDetails = ({ food }) => {
     return "★".repeat(params);
   }
 
-  console.log(Math.floor(Math.random() * 12) + 1);
+  console.log(dataFood);
 
   return (
     <div>
-      {showDelete && (
-        <div className="w-96 h-80 space-y-10 bg-gray-800 text-white rounded-3xl shadow-md flex flex-col justify-center items-center fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-          <h2 className="text-2xl font-semibold mb-4">Are you sure?</h2>
-          <div className="flex justify-around w-full">
-            <button
-              className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg"
-              onClick={handleDelete}
-            >
-              Yes
-            </button>
-            <button
-              className="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg"
-              onClick={() => setShowDelete(false)}
-            >
-              No
-            </button>
-          </div>
+      <div
+        className={`transition-all duration-500 w-96 h-80 space-y-10 bg-gray-800 text-white rounded-3xl shadow-md flex flex-col justify-center items-center fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 ${
+          showDelete
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        } `}
+      >
+        <h2 className="text-2xl font-semibold mb-4">Are you sure?</h2>
+        <div className="flex justify-around w-full">
+          <button
+            className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg"
+            onClick={handleDelete}
+          >
+            Yes
+          </button>
+          <button
+            className="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg"
+            onClick={() => setShowDelete(false)}
+          >
+            No
+          </button>
         </div>
-      )}
-      <div className={`px-20 py-5 ${showDelete && "opacity-20"}`}>
+      </div>
+
+      <div
+        className={`px-20 py-5 transition-all duration-500 ${
+          showDelete ? "opacity-20" : "opacity-100"
+        }`}
+      >
         <Head>
           <title>Food Mania- {formatName(food.name)}</title>
         </Head>

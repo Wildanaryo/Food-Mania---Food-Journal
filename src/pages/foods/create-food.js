@@ -26,15 +26,26 @@ export default function CreateFood() {
     }
     return result.join(" ");
   }
+  const handleJumpHome = () => {
+    router.push("/");
+  };
 
   console.log(ingreFood);
 
   return (
-    <div className="flex justify-center p-10">
+    <div className="flex flex-col items-center space-y-4 p-10 w-full">
       <Head>
         <title>Food Mania - Create Food</title>
       </Head>
-      <form className="w-[60%] border-4 p-4">
+      <div className="flex flex-col items-start w-1/2">
+        <button
+          className="bg-orange-800 px-4 py-2 rounded w-40"
+          onClick={handleJumpHome}
+        >
+          Home
+        </button>
+      </div>
+      <form className="w-[50%] border-4 p-4">
         <div className="text-2xl text-center mb-6">Form Create Food</div>
         <div className="mb-6">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -53,10 +64,10 @@ export default function CreateFood() {
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Description
           </label>
-          <input
+          <textarea
             type="text"
             value={descFood}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 h-40 border border-gray-300 text-gray-900 text-sm min-h-min rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Description"
             onChange={(e) => setDescFood(e.target.value)}
             required
@@ -70,7 +81,7 @@ export default function CreateFood() {
             type="text"
             value={ingreFood}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Description"
+            placeholder="Ingredients"
             onChange={(e) => setIngreFood(e.target.value)}
             required
           />
