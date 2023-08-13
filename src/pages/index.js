@@ -2,6 +2,7 @@ import Head from "next/head";
 import { FoodContext } from "@/context/FoodProvider";
 import { useContext, useEffect } from "react";
 import Link from "next/link";
+import Footer from "@/components/footer";
 
 export default function Home() {
   const { setDataFood, getFood, dataFood } = useContext(FoodContext);
@@ -9,7 +10,7 @@ export default function Home() {
   const fetchFood = async () => {
     try {
       const foods = await getFood();
-      await setDataFood(foods);
+      setDataFood(foods);
     } catch (error) {
       console.log(error);
     }
@@ -54,12 +55,10 @@ export default function Home() {
         <div className="text-yellow-500">
           {ratingStar(dataFood[params].rating)}
         </div>
-        <div>{dataFood[params].name}</div>
+        <div>{formatName(dataFood[params].name)}</div>
       </Link>
     );
   };
-
-  const number = Math.floor(Math.random() * 12) + 1;
 
   console.log(dataFood);
   return (
@@ -67,27 +66,43 @@ export default function Home() {
       className={`flex bg-black text-white min-h-screen flex-col items-center justify-between gap-6`}
     >
       <Head>
-        <title>Final Project - Food</title>
+        <title>Food Mania</title>
       </Head>
       <section className="w-full flex flex-col place-items-center justify-center gap-10">
-        <h1 className="text-6xl">
+        <button className="text-6xl hover:scale-110 transition-all ease-in-out">
           FOOD MANIA<span className="text-xl">mantap</span>
-        </h1>
-        <div className="w-10/12 h-10 flex flex-row justify-around text-2xl">
-          <h2 className="hover:border-b-2 sm:block hidden">CHICKEN</h2>
-          <h2 className="hover:border-b-2 md:block hidden">PASTA/NOODLES</h2>
-          <h2 className="hover:border-b-2 xl:block hidden">BREAKFAST</h2>
-          <h2 className="hover:border-b-2 xl:block hidden">TACOS</h2>
-          <h2 className="hover:border-b-2 sm:block hidden">TRADITIONAL FOOD</h2>
-          <h2 className="hover:border-b-2 xl:block hidden">GLUTEN-FREE</h2>
-          <h2 className="hover:border-b-2 sm:block hidden">DESERT</h2>
+        </button>
+        <nav className="w-full flex flex-col items-center justify-center">
+          <div className="w-10/12 h-10 flex flex-row justify-around text-2xl">
+            <h2 className="hover:border-b-2 sm:block hidden">CHICKEN</h2>
+            <h2 className="hover:border-b-2 md:block hidden">PASTA/NOODLES</h2>
+            <h2 className="hover:border-b-2 xl:block hidden">BREAKFAST</h2>
+            <h2 className="hover:border-b-2 xl:block hidden">TACOS</h2>
+            <h2 className="hover:border-b-2 sm:block hidden">
+              TRADITIONAL FOOD
+            </h2>
+            <h2 className="hover:border-b-2 xl:block hidden">GLUTEN-FREE</h2>
+            <h2 className="hover:border-b-2 sm:block hidden">DESERT</h2>
+          </div>
+        </nav>
+        <div className="space-y-2 flex flex-col justify-center items-center">
+          <Link href={`/foods/create-food/`}>
+            <button className="bg-slate-500 px-4 py-2 rounded hover:scale-105 transition-transform ease-in-out">
+              Create Food
+            </button>
+          </Link>
+          <Link href={`/all-foods/`}>
+            <button className="bg-slate-500 px-4 py-2 rounded hover:scale-105 transition-transform ease-in-out">
+              All Food
+            </button>
+          </Link>
         </div>
-        <Link href={`/foods/create-food/`}>
-          <button className="bg-blue-500 px-4 py-2 rounded">Create Food</button>
-        </Link>
 
-        <div className="w-full flex flex-col items-center">
-          <Link href={`foods/${dataFood[3].id}`} className="w-3/4 flex">
+        <section className="w-full flex flex-col items-center ">
+          <Link
+            href={`foods/${dataFood[3].id}`}
+            className="w-3/4 flex hover:scale-110 transition-transform ease-in-out"
+          >
             <div className="h-96 w-4/6">
               <img
                 className="w-full h-full object-cover object-center"
@@ -99,9 +114,9 @@ export default function Home() {
               <p className="">{dataFood[3].description}</p>
             </div>
           </Link>
-        </div>
+        </section>
 
-        <div className="w-full flex flex-col items-center mb-10">
+        <section className="w-full flex flex-col items-center mb-10">
           <div className="w-3/5">
             <h2 className="text-4xl mb-2">Super Delicious</h2>
             <div className="grid grid-cols-3 gap-4">
@@ -110,9 +125,9 @@ export default function Home() {
               {foods(16)}
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="w-full flex flex-col items-center mb-10">
+        <section className="w-full flex flex-col items-center mb-10">
           <div className="w-3/5">
             <h2 className="text-4xl mb-2">Tasteful</h2>
             <div className="grid grid-cols-3 gap-4">
@@ -121,13 +136,13 @@ export default function Home() {
               {foods(19)}
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="w-full flex flex-col justify-center items-center bg-slate-800 py-16">
+        <section className="w-full flex flex-col justify-center items-center bg-slate-800 py-16">
           <div className="w-96 text-center">
             <h1 className="text-6xl mb-2">Deliciousness to your inbox</h1>
             <p className="mb-2">
-              Enjoy weekly hand picked recipes and recommendations
+              Enjoy weekly hand picked foods and recommendations
             </p>
             <div className="flex pb-8">
               <input
@@ -140,45 +155,29 @@ export default function Home() {
               </button>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="w-3/5 flex flex-col justify-center items-center">
+        <section className="w-3/5 flex flex-col justify-center items-center">
           <h2 className="text-4xl text-left mb-4 w-full">
             Latest Food Journals
           </h2>
-          <div className="w-full grid grid-cols-4 grid-rows-5 gap-4">
-            {dataFood.map((food, index) => (
-              <Link key={index} href={`foods/${food.id}`} className="mb-16">
-                <img
-                  className="w-full h-full object-cover object-center"
-                  src={food.imageUrl}
-                />
-                <div>{food.name}</div>
-              </Link>
-            ))}
+          <div className="w-full grid grid-cols-4 gap-4">
+            {dataFood.map(
+              (food, index) =>
+                index <= 11 && (
+                  <Link key={index} href={`foods/${food.id}`} className="mb-16">
+                    <img
+                      className="w-full h-full object-cover object-center"
+                      src={food.imageUrl}
+                    />
+                    <div>{food.name}</div>
+                  </Link>
+                )
+            )}
           </div>
-        </div>
+        </section>
 
-        {/* {dataFood
-          ? dataFood.map((food, index) => (
-              <div key={index} className="w-full grid place-items-center">
-                <Link
-                  href={`/foods/${food.id}`}
-                  className="grid place-items-center w-[60%]"
-                >
-                  <img
-                    className="w-full"
-                    key={index}
-                    src={food.imageUrl}
-                    alt={food.description}
-                  />
-                  <h1 className="text-center text-3xl">
-                    {formatName(food.name)}
-                  </h1>
-                </Link>
-              </div>
-            ))
-          : null} */}
+        <Footer />
       </section>
     </div>
   );

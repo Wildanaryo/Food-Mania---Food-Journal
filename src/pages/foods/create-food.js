@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 
 export default function CreateFood() {
-  const { createFood } = useContext(FoodContext);
+  const { createFood, dataFood } = useContext(FoodContext);
 
   const [nameFood, setNameFood] = useState("");
   const [imgFood, setImgFood] = useState("");
@@ -30,7 +30,7 @@ export default function CreateFood() {
     router.push("/");
   };
 
-  console.log(ingreFood);
+  console.log(dataFood);
 
   return (
     <div className="flex flex-col items-center space-y-4 p-10 w-full">

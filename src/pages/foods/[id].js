@@ -18,20 +18,6 @@ const FoodDetails = ({ food }) => {
     return result.join(" ");
   }
 
-  const fetchFood = async () => {
-    try {
-      const foods = await getFood();
-      setDataFood(foods);
-      console.log(dataFood);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchFood();
-  }, []);
-
   const handleDelete = async () => {
     await deleteFood(food.id);
     router.push("/");
@@ -117,36 +103,38 @@ const FoodDetails = ({ food }) => {
             Edit Food
           </button>
         </div>
-        <div className="grid place-items-center w-full">
-          <h1 className="text-center text-6xl">{formatName(food.name)}</h1>
-          <h5 className="text-center text-base mt-10">
-            {food.updatedAt === food.createdAt ? (
-              <div>
-                Created {formatDate(food.updatedAt)}
-                <p className="text-yellow-400 text-sm">
-                  {ratingStar(food.rating)}
-                </p>
-              </div>
-            ) : (
-              <div>
-                Updated {formatDate(food.updatedAt)}
-                <p className="text-yellow-400 text-sm">
-                  {ratingStar(food.rating)}
-                </p>
-              </div>
-            )}
-          </h5>
-          <img className="w-[75%] mt-2" src={food.imageUrl} alt={food.name} />
-          <p className="text-lg mt-5">{food.description}</p>
-          <ul className="flex flex-col justify-start w-full mt-10">
-            <p className="font-bold text-xl">Ingredients :</p>
-            {food.ingredients.map((item, index) => (
-              <li key={index} className="text-lg">
-                {index + 1}. {item}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <section className="grid place-items-center">
+          <div className="grid place-items-center w-2/3">
+            <h1 className="text-center text-6xl">{formatName(food.name)}</h1>
+            <h5 className="text-center text-base mt-10">
+              {food.updatedAt === food.createdAt ? (
+                <div>
+                  Created {formatDate(food.updatedAt)}
+                  <p className="text-yellow-400 text-sm">
+                    {ratingStar(food.rating)}
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  Updated {formatDate(food.updatedAt)}
+                  <p className="text-yellow-400 text-sm">
+                    {ratingStar(food.rating)}
+                  </p>
+                </div>
+              )}
+            </h5>
+            <img className="w-full mt-2" src={food.imageUrl} alt={food.name} />
+            <p className="text-lg mt-5">{food.description}</p>
+            <ul className="flex flex-col justify-start w-full mt-10">
+              <p className="font-bold text-xl">Ingredients :</p>
+              {food.ingredients.map((item, index) => (
+                <li key={index} className="text-lg">
+                  {index + 1}. {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       </div>
     </div>
   );

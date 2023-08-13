@@ -10,7 +10,7 @@ export const FoodContext = createContext();
 
 export const FoodProvider = ({ children }) => {
   const [dataFood, setDataFood] = useState("");
-
+  console.log(dataFood);
   return (
     <FoodContext.Provider
       value={{
