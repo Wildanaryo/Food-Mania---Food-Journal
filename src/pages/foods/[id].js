@@ -1,3 +1,4 @@
+import CustomHead from "@/components/customHead";
 import { FoodContext } from "@/context/FoodProvider";
 import axios from "axios";
 import Head from "next/head";
@@ -46,7 +47,7 @@ const FoodDetails = ({ food }) => {
     return "★".repeat(params);
   }
 
-  console.log(dataFood);
+  console.log(food.imageUrl);
 
   return (
     <div>
@@ -79,9 +80,7 @@ const FoodDetails = ({ food }) => {
           showDelete ? "opacity-20" : "opacity-100"
         }`}
       >
-        <Head>
-          <title>Food Mania- {formatName(food.name)}</title>
-        </Head>
+        <CustomHead title={`Food Mania- ${formatName(food.name)}`} />
 
         <div className="flex justify-between mb-8">
           <button

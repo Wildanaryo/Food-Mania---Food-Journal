@@ -1,4 +1,6 @@
+import CustomHead from "@/components/customHead";
 import { FoodContext } from "@/context/FoodProvider";
+import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
@@ -15,8 +17,45 @@ export default function CreateFood() {
 
   const handleCreateFood = async (event) => {
     event.preventDefault();
-    await createFood(formatName(nameFood), descFood, ingreFood, imgFood);
-    router.push(`/`);
+
+    try {
+      const uploadedImageUrl = await handleUploadImage();
+
+      if (uploadedImageUrl) {
+        await createFood(
+          formatName(nameFood),
+          descFood,
+          ingreFood,
+          uploadedImageUrl
+        );
+        router.push(`/`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUploadImage = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("image", imgFood);
+
+      const res = await axios.post(
+        `https://api-bootcamp.do.dibimbing.id/api/v1/upload-image`,
+        formData,
+        {
+          headers: {
+            apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return res.data.url;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
 
   function formatName(params) {
@@ -30,13 +69,9 @@ export default function CreateFood() {
     router.push("/");
   };
 
-  console.log(dataFood);
-
   return (
     <div className="flex flex-col items-center space-y-4 p-10 w-full">
-      <Head>
-        <title>Food Mania - Create Food</title>
-      </Head>
+      <CustomHead title="Food Mania - Create Food" />
       <div className="flex flex-col items-start w-1/2">
         <button
           className="bg-orange-800 px-4 py-2 rounded w-40"
@@ -91,11 +126,10 @@ export default function CreateFood() {
             Image Url
           </label>
           <input
-            type="text"
-            value={imgFood}
+            type="file"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Image Url"
-            onChange={(e) => setImgFood(e.target.value)}
+            // placeholder="Food Image"
+            onChange={(e) => setImgFood(e.target.files[0])}
             required
           />
         </div>

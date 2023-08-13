@@ -3,6 +3,7 @@ import { FoodContext } from "@/context/FoodProvider";
 import { useContext, useEffect } from "react";
 import Link from "next/link";
 import Footer from "@/components/footer";
+import CustomHead from "@/components/customHead";
 
 export default function Home() {
   const { setDataFood, getFood, dataFood } = useContext(FoodContext);
@@ -65,9 +66,7 @@ export default function Home() {
     <div
       className={`flex bg-black text-white min-h-screen flex-col items-center justify-between gap-6`}
     >
-      <Head>
-        <title>Food Mania</title>
-      </Head>
+      <CustomHead title="Food Mania" />
       <section className="w-full flex flex-col place-items-center justify-center gap-10">
         <button className="text-6xl hover:scale-110 transition-all ease-in-out">
           FOOD MANIA<span className="text-xl">mantap</span>

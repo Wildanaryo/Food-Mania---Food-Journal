@@ -1,3 +1,4 @@
+import CustomHead from "@/components/customHead";
 import { FoodContext } from "@/context/FoodProvider";
 import axios from "axios";
 import Head from "next/head";
@@ -11,7 +12,7 @@ const UpdateFood = ({ food }) => {
   const [nameFood, setNameFood] = useState(food.name);
   const [imgFood, setImgFood] = useState(food.imageUrl);
   const [descFood, setDescFood] = useState(food.description);
-  const [ingreFood, setIngreFood] = useState(food.ingredients);
+  const [ingreFood, setIngreFood] = useState([food.ingredients]);
 
   function formatName(params) {
     const result = params.toLowerCase().split(" ");
@@ -23,14 +24,47 @@ const UpdateFood = ({ food }) => {
 
   const handleUpdate = async (event) => {
     event.preventDefault();
-    await UpdateFood(
-      nameFood,
-      descFood,
-      formatIngredients(ingreFood),
-      imgFood,
-      food.id
-    );
-    router.push(`/foods/${food.id}`);
+
+    try {
+      const uploadedImageUrl = await handleUploadImage();
+
+      if (typeof uploadedImageUrl === "string" && uploadedImageUrl.length > 0) {
+        await UpdateFood(
+          nameFood,
+          descFood,
+          formatIngredients([ingreFood]),
+          uploadedImageUrl,
+          food.id
+        );
+        router.push(`/foods/${food.id}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUploadImage = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("image", imgFood);
+
+      const res = await axios.post(
+        `https://api-bootcamp.do.dibimbing.id/api/v1/upload-image`,
+        formData,
+        {
+          headers: {
+            apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const uploadedImageUrl = res.data.url;
+
+      return uploadedImageUrl;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
 
   const handleJumpHome = () => {
@@ -39,21 +73,20 @@ const UpdateFood = ({ food }) => {
 
   function formatIngredients(params) {
     const result = params.map((item) => {
-      const trimmedItem = item.trim(); // Menghapus spasi di awal dan akhir kata
+      const trimmedItem = item.trim();
       const capitalizedItem =
         trimmedItem.charAt(0).toUpperCase() +
         trimmedItem.slice(1).toLowerCase();
       return capitalizedItem;
     });
 
-    return result; // Mengembalikan array yang telah diubah
+    return result;
   }
 
+  console.log(ingreFood);
   return (
     <div className="p-20 w-full flex flex-col items-center space-y-4">
-      <Head>
-        <title>Food Mania - Update Food {formatName(food.name)}</title>
-      </Head>
+      <CustomHead title={`Food Mania - Update Food ${formatName(food.name)}`} />
       <div className="flex flex-col items-start w-1/2">
         <button
           className="bg-orange-800 px-4 py-2 rounded w-40"
@@ -107,12 +140,11 @@ const UpdateFood = ({ food }) => {
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Image Url
           </label>
+          <img className="w-full mb-2" src={food.imageUrl} alt={food.name} />
           <input
-            type="text"
-            value={imgFood}
+            type="file"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Image Url"
-            onChange={(e) => setImgFood(e.target.value)}
+            onChange={(e) => setImgFood(e.target.files[0])}
             required
           />
         </div>
