@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import {
   createFood,
   getFood,
@@ -10,6 +10,19 @@ export const FoodContext = createContext();
 
 export const FoodProvider = ({ children }) => {
   const [dataFood, setDataFood] = useState("");
+  const fetchFood = async () => {
+    try {
+      const foods = await getFood();
+      setDataFood(foods);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFood();
+  }, []);
+
   return (
     <FoodContext.Provider
       value={{

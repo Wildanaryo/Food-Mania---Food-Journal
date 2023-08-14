@@ -8,19 +8,6 @@ import CustomHead from "@/components/customHead";
 export default function Home() {
   const { setDataFood, getFood, dataFood } = useContext(FoodContext);
 
-  const fetchFood = async () => {
-    try {
-      const foods = await getFood();
-      setDataFood(foods);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchFood();
-  }, []);
-
   if (!dataFood) {
     return null;
   }

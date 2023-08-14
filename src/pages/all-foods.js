@@ -42,7 +42,7 @@ function Foods() {
     }
   };
 
-  console.log(image);
+  console.log(dataFood);
   return (
     <div>
       <CustomHead title="Food Mania - All Food" />

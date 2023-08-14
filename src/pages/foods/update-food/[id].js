@@ -26,18 +26,12 @@ const UpdateFood = ({ food }) => {
     event.preventDefault();
 
     try {
-      const uploadedImageUrl = await handleUploadImage();
-
-      if (typeof uploadedImageUrl === "string" && uploadedImageUrl.length > 0) {
-        await UpdateFood(
-          nameFood,
-          descFood,
-          formatIngredients([ingreFood]),
-          uploadedImageUrl,
-          food.id
-        );
-        router.push(`/foods/${food.id}`);
+      if (imgFood !== food.imageUrl) {
+        const uploadedImageUrl = await handleUploadImage();
+        setImgFood(uploadedImageUrl);
       }
+      await UpdateFood(nameFood, descFood, ingreFood, imgFood, food.id);
+      router.push(`/foods/${food.id}`);
     } catch (error) {
       console.log(error);
     }

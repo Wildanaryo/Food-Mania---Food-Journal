@@ -12,11 +12,13 @@ export const getFood = async () => {
         },
       }
     );
+
     const newToken = res.data.data.filter(
       (item) => item.imageUrl && item.imageUrl !== "-"
     );
     return newToken;
   } catch (error) {
     console.log(error);
+    console.log(process.env);
   }
 };
