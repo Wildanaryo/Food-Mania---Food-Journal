@@ -20,7 +20,7 @@ export const createFood = async (nameFood, descFood, ingreFood, imgFood) => {
       }
     );
 
-    console.log(res.data);
+    console.log(res);
   } catch (error) {
     console.log(error);
   }

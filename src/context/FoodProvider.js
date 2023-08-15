@@ -4,6 +4,8 @@ import {
   getFood,
   deleteFood,
   UpdateFood,
+  loginApi,
+  registerApi,
 } from "../context/API store/index.js";
 
 export const FoodContext = createContext();
@@ -32,6 +34,8 @@ export const FoodProvider = ({ children }) => {
         createFood,
         deleteFood,
         UpdateFood,
+        loginApi,
+        registerApi,
       }}
     >
       {children}

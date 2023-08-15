@@ -65,6 +65,7 @@ export default function CreateFood() {
     }
     return result.join(" ");
   }
+
   const handleJumpHome = () => {
     router.push("/");
   };
@@ -123,7 +124,7 @@ export default function CreateFood() {
         </div>
         <div className="mb-6">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Image Url
+            Food Image
           </label>
           <input
             type="file"
