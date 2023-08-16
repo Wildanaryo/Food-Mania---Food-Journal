@@ -7,8 +7,8 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="grid place-items-center bg-slate-800">
-      <div className="grid grid-cols-2 w-3/5 py-20">
-        <section className="pr-24">
+      <div className="grid grid-cols-2 md:w-3/5 w-11/12 py-20">
+        <section className="pr-0">
           <div className="text-3xl">
             Food Mania<span className="text-lg">mantap</span>
           </div>
@@ -18,7 +18,7 @@ const Footer = () => {
             pleasure of the moment"
           </div>
         </section>
-        <section className="grid grid-cols-3 gap-10 text-sm">
+        <section className="grid grid-cols-3 gap-1 md:gap-10 text-sm">
           <div className="space-y-2">
             <div className="font-bold text-lg">Food Mania</div>
             <div className="flex flex-col space-y-2">
@@ -48,7 +48,7 @@ const Footer = () => {
           </div>
         </section>
       </div>
-      <div className="border-t-2 w-3/5">
+      <div className="border-t-2 w-11/12 md:w-3/5">
         <div className=" flex justify-between  py-5">
           <div>© 2023 Wildan A. Wicaksono - All rights reserved</div>
           <div className="flex space-x-5">

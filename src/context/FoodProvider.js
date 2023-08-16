@@ -12,6 +12,10 @@ export const FoodContext = createContext();
 
 export const FoodProvider = ({ children }) => {
   const [dataFood, setDataFood] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+  const [roleUser, setRoleUser] = useState("");
+  const [token, setToken] = useState("");
+
   const fetchFood = async () => {
     try {
       const foods = await getFood();
@@ -36,6 +40,12 @@ export const FoodProvider = ({ children }) => {
         UpdateFood,
         loginApi,
         registerApi,
+        isLogin,
+        setIsLogin,
+        roleUser,
+        setRoleUser,
+        token,
+        setToken,
       }}
     >
       {children}

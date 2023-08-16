@@ -4,13 +4,21 @@ import { useContext, useEffect } from "react";
 import Link from "next/link";
 import Footer from "@/components/footer";
 import CustomHead from "@/components/customHead";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  const { setDataFood, getFood, dataFood } = useContext(FoodContext);
+  const { isLogin, dataFood, roleUser, token } = useContext(FoodContext);
 
+  const router = useRouter();
   if (!dataFood) {
     return null;
   }
+
+  useEffect(() => {
+    if (!isLogin) {
+      router.push("/login");
+    }
+  }, []);
 
   // if (typeof window !== "undefined") {
   //   const itemToken = localStorage.getItem("token");
@@ -51,7 +59,7 @@ export default function Home() {
   console.log(dataFood);
   return (
     <div
-      className={`flex bg-black text-white min-h-screen flex-col items-center justify-between gap-6`}
+      className={`flex bg-black text-white min-w-[500px] min-h-screen flex-col items-center justify-between gap-6`}
     >
       <CustomHead title="Food Mania" />
       <section className="w-full flex flex-col place-items-center justify-center gap-10">
@@ -59,54 +67,51 @@ export default function Home() {
           FOOD MANIA<span className="text-xl">mantap</span>
         </button>
         <nav className="w-full flex flex-col items-center justify-center">
-          <div className="w-10/12 h-10 flex flex-row justify-around text-2xl">
-            <h2 className="hover:border-b-2 sm:block hidden">CHICKEN</h2>
+          <div className="md:w-10/12 w-full h-10 flex flex-row justify-around text-2xl">
+            <h2 className="hover:border-b-2">CHICKEN</h2>
             <h2 className="hover:border-b-2 md:block hidden">PASTA/NOODLES</h2>
             <h2 className="hover:border-b-2 xl:block hidden">BREAKFAST</h2>
             <h2 className="hover:border-b-2 xl:block hidden">TACOS</h2>
-            <h2 className="hover:border-b-2 sm:block hidden">
-              TRADITIONAL FOOD
-            </h2>
+            <h2 className="hover:border-b-2">TRADITIONAL FOOD</h2>
             <h2 className="hover:border-b-2 xl:block hidden">GLUTEN-FREE</h2>
-            <h2 className="hover:border-b-2 sm:block hidden">DESERT</h2>
+            <Link href={`/all-foods/`}>
+              <h2 className="hover:border-b-2">ALL FOODS</h2>
+            </Link>
           </div>
         </nav>
-        <div className="space-y-2 flex flex-col justify-center items-center">
-          <Link href={`/foods/create-food/`}>
-            <button className="bg-slate-500 px-4 py-2 rounded hover:scale-105 transition-transform ease-in-out">
-              Create Food
-            </button>
-          </Link>
-          <Link href={`/all-foods/`}>
-            <button className="bg-slate-500 px-4 py-2 rounded hover:scale-105 transition-transform ease-in-out">
-              All Food
-            </button>
-          </Link>
-        </div>
+        {roleUser === "admin" && (
+          <div className="space-y-2 flex flex-col justify-center items-center">
+            <Link href={`/foods/create-food/`}>
+              <button className="bg-slate-500 px-4 py-2 rounded hover:scale-105 transition-transform ease-in-out">
+                Create Food
+              </button>
+            </Link>
+          </div>
+        )}
 
         <section className="w-full flex flex-col items-center ">
           <Link
-            href={`foods/${dataFood[3].id}`}
-            className="w-3/4 flex hover:scale-110 transition-transform ease-in-out"
+            href={`foods/${dataFood[4].id}`}
+            className="w-11/12 md:w-3/4 grid grid-cols-1 md:grid-cols-2 gap-0 hover:scale-110 transition-all duration-500 ease-in-out"
           >
-            <div className="h-96 w-4/6">
+            <div className="h-96 w-full">
               <img
                 className="w-full h-full object-cover object-center"
-                src={dataFood[3].imageUrl}
+                src={dataFood[4].imageUrl}
               />
             </div>
-            <div className="bg-slate-800 w-2/6 flex-col flex  justify-center items-center gap-3 p-4">
-              <h2 className="text-4xl text-left w-full">{dataFood[3].name}</h2>
-              <p className="">{dataFood[3].description}</p>
+            <div className="bg-slate-800 w-full flex-col flex  justify-center items-center gap-3 p-4">
+              <h2 className="text-4xl text-left w-full">{dataFood[4].name}</h2>
+              <p className="">{dataFood[4].description}</p>
             </div>
           </Link>
         </section>
 
         <section className="w-full flex flex-col items-center mb-10">
-          <div className="w-3/5">
+          <div className="md:w-3/5 w-11/12">
             <h2 className="text-4xl mb-2">Super Delicious</h2>
             <div className="grid grid-cols-3 gap-4">
-              {foods(4)}
+              {foods(1)}
               {foods(10)}
               {foods(16)}
             </div>
@@ -114,7 +119,7 @@ export default function Home() {
         </section>
 
         <section className="w-full flex flex-col items-center mb-10">
-          <div className="w-3/5">
+          <div className="md:w-3/5 w-11/12">
             <h2 className="text-4xl mb-2">Tasteful</h2>
             <div className="grid grid-cols-3 gap-4">
               {foods(8)}
@@ -143,7 +148,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="w-3/5 flex flex-col justify-center items-center">
+        <section className="md:w-3/5 w-11/12 flex flex-col justify-center items-center">
           <h2 className="text-4xl text-left mb-4 w-full">
             Latest Food Journals
           </h2>

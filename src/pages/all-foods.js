@@ -6,11 +6,11 @@ import React, { useContext, useState } from "react";
 
 function Foods() {
   const [image, setImage] = useState("");
-  const { setDataFood, getFood, dataFood } = useContext(FoodContext);
+  const { dataFood } = useContext(FoodContext);
 
-  //   if (!dataFood) {
-  //     return null;
-  //   }
+  if (!dataFood) {
+    return null;
+  }
 
   function formatName(params) {
     const result = params.toLowerCase().split(" ");
@@ -42,33 +42,44 @@ function Foods() {
     }
   };
 
+  function ratingStar(params) {
+    if (params <= 0) {
+      return "No Ratings Yet";
+    }
+
+    return "★".repeat(params);
+  }
+
   console.log(dataFood);
   return (
-    <div>
+    <div className="space-y-10">
       <CustomHead title="Food Mania - All Food" />
-      Under Maintenance
-      <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-      <button onClick={handleUploadImage}>Submit</button>
-      {dataFood
-        ? dataFood.map((food, index) => (
-            <div key={index} className="w-full grid place-items-center">
+      <h1 className="w-full text-center text-4xl mb-20 mt-20">
+        Under Maintenance
+      </h1>
+      <section className="w-full flex flex-col items-center space-y-10">
+        {dataFood
+          ? dataFood.map((food, index) => (
               <Link
-                href={`/foods/${food.id}`}
-                className="grid place-items-center w-[60%]"
+                key={index}
+                href={`foods/${food.id}`}
+                className="w-11/12 md:w-3/4 grid grid-cols-1 md:grid-cols-2 gap-0 hover:scale-110 transition-all duration-500 ease-in-out"
               >
-                <img
-                  className="w-full"
-                  key={index}
-                  src={food.imageUrl}
-                  alt={food.description}
-                />
-                <h1 className="text-center text-3xl">
-                  {formatName(food.name)}
-                </h1>
+                <div className="h-96 w-full">
+                  <img
+                    className="w-full h-full object-cover object-center"
+                    src={food.imageUrl}
+                  />
+                </div>
+                <div className="bg-slate-800 w-full flex-col flex  justify-center items-center gap-3 p-4">
+                  <h2 className="text-4xl text-left w-full">{food.name}</h2>
+                  <p className="">{food.description}</p>
+                  <p>{ratingStar(food.rating)}</p>
+                </div>
               </Link>
-            </div>
-          ))
-        : null}
+            ))
+          : null}
+      </section>
     </div>
   );
 }

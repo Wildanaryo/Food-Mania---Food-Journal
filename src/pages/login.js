@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import CustomHead from "@/components/customHead";
 import EyeSlash from "@/icon/eye-slash";
 import EyeIcon from "@/icon/eye";
 import { loginApi, registerApi } from "@/context/API store";
 import axios from "axios";
+import { FoodContext } from "@/context/FoodProvider";
+import { useRouter } from "next/router";
 
 function LoginPage() {
   const [login, setLogin] = useState(true);
@@ -18,6 +20,11 @@ function LoginPage() {
   const [phoneAcc, setPhoneAcc] = useState("");
   const [profPictAcc, setProfPictAcc] = useState("");
   const [message, setMessage] = useState("");
+
+  const { isLogin, setIsLogin, roleUser, setRoleUser, token, setToken } =
+    useContext(FoodContext);
+
+  const router = useRouter();
 
   const handleChangeForm = () => {
     setLogin(!login);
@@ -40,11 +47,19 @@ function LoginPage() {
 
   const handleLoginAccount = async (event) => {
     event.preventDefault();
+    setMessage("");
+    setRoleUser("");
+    setToken("");
+    setIsLogin(false);
     const res = await loginApi(emailAcc, passAcc);
     if (res.code !== "200") {
       setMessage(res.message);
+    } else {
+      setRoleUser(res.user.role);
+      setToken(res.token);
+      setIsLogin(true);
+      router.push("/");
     }
-    console.log(res);
   };
 
   function formatName(params) {
@@ -64,6 +79,7 @@ function LoginPage() {
       setMessage("Phone number is not valid");
     } else {
       try {
+        setMessage("");
         const uploadedImageUrl = await handleUploadImage();
 
         if (uploadedImageUrl) {
@@ -78,7 +94,6 @@ function LoginPage() {
           );
           // router.push(`/`);
           console.log(res);
-          setMessage("");
           if (res.status !== 200) {
             setMessage(res.response.data.message);
           }
@@ -118,7 +133,7 @@ function LoginPage() {
   //   setMessage("Passwords do not match.")
   // }
 
-  console.log(nameAcc, emailAcc, passAcc, login);
+  console.log(roleUser, isLogin, token);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center h-screen w-full">
       <CustomHead title="Food Mania - Login Form" />

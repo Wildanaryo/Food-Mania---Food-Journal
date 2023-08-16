@@ -5,10 +5,16 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 
 const FoodDetails = ({ food }) => {
-  const { deleteFood, dataFood, setDataFood, getFood } =
-    useContext(FoodContext);
+  const { deleteFood, isLogin, roleUser, token } = useContext(FoodContext);
   const [showDelete, setShowDelete] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    // Check the condition for redirect
+    if (!isLogin) {
+      router.push("/login");
+    }
+  }, []);
 
   function formatName(params) {
     const result = params.toLowerCase().split(" ");
@@ -46,7 +52,7 @@ const FoodDetails = ({ food }) => {
     return "★".repeat(params);
   }
 
-  console.log(food.imageUrl);
+  console.log(isLogin);
 
   return (
     <div>
@@ -82,24 +88,28 @@ const FoodDetails = ({ food }) => {
         <CustomHead title={`Food Mania- ${formatName(food.name)}`} />
 
         <div className="flex justify-between mb-8">
-          <button
-            className="bg-blue-500 px-4 py-2 rounded"
-            onClick={() => setShowDelete(true)}
-          >
-            Delete Food
-          </button>
+          {roleUser === "admin" && (
+            <button
+              className="bg-blue-500 px-4 py-2 rounded"
+              onClick={() => setShowDelete(true)}
+            >
+              Delete Food
+            </button>
+          )}
           <button
             className="bg-orange-800 px-4 py-2 rounded"
             onClick={handleJumpHome}
           >
             Home
           </button>
-          <button
-            className="bg-blue-500 px-4 py-2 rounded"
-            onClick={handleUpdate}
-          >
-            Edit Food
-          </button>
+          {roleUser === "admin" && (
+            <button
+              className="bg-blue-500 px-4 py-2 rounded"
+              onClick={handleUpdate}
+            >
+              Edit Food
+            </button>
+          )}
         </div>
         <section className="grid place-items-center">
           <div className="grid place-items-center w-2/3">
