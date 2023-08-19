@@ -6,19 +6,23 @@ import {
   UpdateFood,
   loginApi,
   registerApi,
+  LogoutApi,
+  LikeFood,
+  DislikeFood,
 } from "../context/API store/index.js";
 
 export const FoodContext = createContext();
 
 export const FoodProvider = ({ children }) => {
   const [dataFood, setDataFood] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [roleUser, setRoleUser] = useState("");
   const [token, setToken] = useState("");
 
   const fetchFood = async () => {
     try {
-      const foods = await getFood();
+      setIsLogin(true);
+      const foods = await getFood(token);
       setDataFood(foods);
     } catch (error) {
       console.log(error);
@@ -26,8 +30,10 @@ export const FoodProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchFood();
-  }, []);
+    if (token) {
+      fetchFood();
+    }
+  }, [token]);
 
   return (
     <FoodContext.Provider
@@ -46,6 +52,9 @@ export const FoodProvider = ({ children }) => {
         setRoleUser,
         token,
         setToken,
+        LogoutApi,
+        LikeFood,
+        DislikeFood,
       }}
     >
       {children}

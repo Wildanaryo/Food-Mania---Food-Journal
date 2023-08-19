@@ -3,7 +3,7 @@ import Image from "next/image";
 import CustomHead from "@/components/customHead";
 import EyeSlash from "@/icon/eye-slash";
 import EyeIcon from "@/icon/eye";
-import { loginApi, registerApi } from "@/context/API store";
+import { LogoutApi, loginApi, registerApi } from "@/context/API store";
 import axios from "axios";
 import { FoodContext } from "@/context/FoodProvider";
 import { useRouter } from "next/router";
@@ -55,9 +55,12 @@ function LoginPage() {
     if (res.code !== "200") {
       setMessage(res.message);
     } else {
-      setRoleUser(res.user.role);
-      setToken(res.token);
-      setIsLogin(true);
+    }
+    setRoleUser(res.user.role);
+    setToken(res.token);
+    setIsLogin(true);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("token", res.token);
       router.push("/");
     }
   };
@@ -133,7 +136,7 @@ function LoginPage() {
   //   setMessage("Passwords do not match.")
   // }
 
-  console.log(roleUser, isLogin, token);
+  // console.log(roleUser, isLogin, token);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center h-screen w-full">
       <CustomHead title="Food Mania - Login Form" />

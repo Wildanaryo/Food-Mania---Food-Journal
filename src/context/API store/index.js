@@ -4,3 +4,6 @@ export * from "./deleteFood";
 export * from "./updateFood";
 export * from "./login";
 export * from "./register";
+export * from "./logout";
+export * from "./like";
+export * from "./dislike";

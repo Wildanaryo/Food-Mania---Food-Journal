@@ -7,7 +7,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="grid place-items-center bg-slate-800">
-      <div className="grid grid-cols-2 md:w-3/5 w-11/12 py-20">
+      <div className="grid grid-cols-2 md:w-3/5 w-11/12 py-20 gap-2">
         <section className="pr-0">
           <div className="text-3xl">
             Food Mania<span className="text-lg">mantap</span>
@@ -49,7 +49,7 @@ const Footer = () => {
         </section>
       </div>
       <div className="border-t-2 w-11/12 md:w-3/5">
-        <div className=" flex justify-between  py-5">
+        <div className=" flex justify-between py-5">
           <div>© 2023 Wildan A. Wicaksono - All rights reserved</div>
           <div className="flex space-x-5">
             <FacebookIcon width={16} height={16} fill="#fff" />

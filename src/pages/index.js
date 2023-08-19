@@ -5,25 +5,44 @@ import Link from "next/link";
 import Footer from "@/components/footer";
 import CustomHead from "@/components/customHead";
 import { useRouter } from "next/router";
+import Navbar from "@/components/navbar";
+import { LogoutApi } from "@/context/API store";
 
 export default function Home() {
-  const { isLogin, dataFood, roleUser, token } = useContext(FoodContext);
-
+  const { isLogin, dataFood, roleUser, token, setToken, setIsLogin } =
+    useContext(FoodContext);
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const itemToken = localStorage.getItem("token");
+      if (itemToken) {
+        console.log(itemToken);
+        setToken(itemToken);
+        setIsLogin(true);
+      } else {
+        router.push("/login");
+      }
+    }
+
+    if (!isLogin) {
+      console.log(isLogin);
+    }
+  }, [isLogin]);
+
   if (!dataFood) {
     return null;
   }
-
-  useEffect(() => {
-    if (!isLogin) {
-      router.push("/login");
+  const handleLogoutAccount = async () => {
+    const res = await LogoutApi(token);
+    setToken("");
+    if (typeof window !== "undefined") {
+      const itemToken = localStorage.getItem("token");
+      console.log(itemToken);
     }
-  }, []);
-
-  // if (typeof window !== "undefined") {
-  //   const itemToken = localStorage.getItem("token");
-  //   console.log(itemToken);
-  // }
+    router.push("/login");
+    console.log(res);
+  };
 
   function formatName(params) {
     const result = params.toLowerCase().split(" ");
@@ -56,29 +75,15 @@ export default function Home() {
     );
   };
 
-  console.log(dataFood);
+  console.log(isLogin);
   return (
     <div
       className={`flex bg-black text-white min-w-[500px] min-h-screen flex-col items-center justify-between gap-6`}
     >
       <CustomHead title="Food Mania" />
       <section className="w-full flex flex-col place-items-center justify-center gap-10">
-        <button className="text-6xl hover:scale-110 transition-all ease-in-out">
-          FOOD MANIA<span className="text-xl">mantap</span>
-        </button>
-        <nav className="w-full flex flex-col items-center justify-center">
-          <div className="md:w-10/12 w-full h-10 flex flex-row justify-around text-2xl">
-            <h2 className="hover:border-b-2">CHICKEN</h2>
-            <h2 className="hover:border-b-2 md:block hidden">PASTA/NOODLES</h2>
-            <h2 className="hover:border-b-2 xl:block hidden">BREAKFAST</h2>
-            <h2 className="hover:border-b-2 xl:block hidden">TACOS</h2>
-            <h2 className="hover:border-b-2">TRADITIONAL FOOD</h2>
-            <h2 className="hover:border-b-2 xl:block hidden">GLUTEN-FREE</h2>
-            <Link href={`/all-foods/`}>
-              <h2 className="hover:border-b-2">ALL FOODS</h2>
-            </Link>
-          </div>
-        </nav>
+        <Navbar />
+        <button onClick={handleLogoutAccount}>Logout</button>
         {roleUser === "admin" && (
           <div className="space-y-2 flex flex-col justify-center items-center">
             <Link href={`/foods/create-food/`}>
@@ -156,7 +161,7 @@ export default function Home() {
             {dataFood.map(
               (food, index) =>
                 index <= 11 && (
-                  <Link key={index} href={`foods/${food.id}`} className="mb-16">
+                  <Link key={index} href={`foods/${food.id}`} className="mb-10">
                     <img
                       className="w-full h-full object-cover object-center"
                       src={food.imageUrl}
