@@ -9,6 +9,8 @@ import {
   LogoutApi,
   LikeFood,
   DislikeFood,
+  GetReview,
+  InputReview,
 } from "../context/API store/index.js";
 
 export const FoodContext = createContext();
@@ -55,6 +57,8 @@ export const FoodProvider = ({ children }) => {
         LogoutApi,
         LikeFood,
         DislikeFood,
+        GetReview,
+        InputReview,
       }}
     >
       {children}

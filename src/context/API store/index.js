@@ -7,3 +7,5 @@ export * from "./register";
 export * from "./logout";
 export * from "./like";
 export * from "./dislike";
+export * from "./getReview";
+export * from "./inputReview";

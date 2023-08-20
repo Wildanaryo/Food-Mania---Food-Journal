@@ -8,7 +8,7 @@ export const loginApi = async (isEmail, isPassword) => {
       password: isPassword,
     };
     const res = await axios.post(
-      `https://api-bootcamp.do.dibimbing.id/api/v1/login`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/login`,
       requestBody,
       {
         headers: {
@@ -16,6 +16,7 @@ export const loginApi = async (isEmail, isPassword) => {
         },
       }
     );
+    console.log(res.data);
     return res.data;
   } catch (error) {
     return error.response.data;

@@ -20,6 +20,5 @@ export const getFood = async (token) => {
     return dataFood;
   } catch (error) {
     console.log(error);
-    console.log(process.env);
   }
 };

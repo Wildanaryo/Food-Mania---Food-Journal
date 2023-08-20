@@ -55,13 +55,13 @@ function LoginPage() {
     if (res.code !== "200") {
       setMessage(res.message);
     } else {
-    }
-    setRoleUser(res.user.role);
-    setToken(res.token);
-    setIsLogin(true);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("token", res.token);
-      router.push("/");
+      setRoleUser(res.user.role);
+      setToken(res.token);
+      setIsLogin(true);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", res.token);
+        router.push("/");
+      }
     }
   };
 
@@ -99,6 +99,11 @@ function LoginPage() {
           console.log(res);
           if (res.status !== 200) {
             setMessage(res.response.data.message);
+          } else {
+            // console.log(res);
+            setLogin(true);
+            setEmailAcc("");
+            setPassAcc("");
           }
         } else {
           setMessage("The profile picture field hasn't been filled out yet.");
@@ -137,6 +142,7 @@ function LoginPage() {
   // }
 
   // console.log(roleUser, isLogin, token);
+  console.log(process.env.BASE_URL);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center h-screen w-full">
       <CustomHead title="Food Mania - Login Form" />
@@ -150,7 +156,7 @@ function LoginPage() {
             type="checkbox"
             id="check"
             className="sr-only peer"
-            defaultChecked={login}
+            checked={login}
           />
           <span className="w-3/5 h-4/5 bg-rose-300 absolute rounded-3xl left-[8px] top-1 peer-checked:bg-rose-600 peer-checked:left-[56px] transition-all duration-500 grid place-items-center text-xl">
             {login ? "Login" : "Register"}

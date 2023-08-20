@@ -106,7 +106,9 @@ export default function Home() {
               />
             </div>
             <div className="bg-slate-800 w-full flex-col flex  justify-center items-center gap-3 p-4">
-              <h2 className="text-4xl text-left w-full">{dataFood[4].name}</h2>
+              <h2 className="text-4xl text-left w-full">
+                {formatName(dataFood[4].name)}
+              </h2>
               <p className="">{dataFood[4].description}</p>
             </div>
           </Link>

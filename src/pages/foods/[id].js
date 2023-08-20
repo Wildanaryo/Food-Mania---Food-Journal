@@ -16,10 +16,16 @@ const FoodDetails = () => {
     DislikeFood,
     LikeFood,
     setToken,
+    GetReview,
+    InputReview,
   } = useContext(FoodContext);
   const [showDelete, setShowDelete] = useState(false);
   const [food, setFood] = useState("");
   const [like, setLike] = useState("");
+  const [rating, setRating] = useState(5);
+  const [review, setReview] = useState("");
+  const [dataReview, setDataReview] = useState("");
+  const [inputReview, setInputReview] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -27,7 +33,6 @@ const FoodDetails = () => {
     if (typeof window !== "undefined") {
       const itemToken = localStorage.getItem("token");
       if (itemToken) {
-        console.log(itemToken);
         setToken(itemToken);
         // setIsLogin(true);
       } else {
@@ -58,11 +63,21 @@ const FoodDetails = () => {
       }
     }
 
+    async function getReview() {
+      try {
+        const res = await GetReview(id);
+        setDataReview(res.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     if (id) {
       fetchData();
+      getReview();
       setLike(food.isLike);
     }
-  }, [router.query.id, food.isLike]);
+  }, [router.query.id, food.isLike, inputReview]);
 
   if (!food) {
     return null;
@@ -88,13 +103,17 @@ const FoodDetails = () => {
   const handleDislikeButton = async () => {
     await DislikeFood(food.id, token);
     setLike(false);
-    console.log(food.isLike);
   };
 
   const handleLikeButton = async () => {
     await LikeFood(food.id, token);
     setLike(true);
-    console.log(food.isLike);
+  };
+
+  const handleSubmitReview = async (event) => {
+    event.preventDefault();
+    const res = await InputReview(rating, review, food.id, token);
+    setInputReview(res);
   };
 
   function formatDate(params) {
@@ -112,7 +131,8 @@ const FoodDetails = () => {
     return "★".repeat(params);
   }
 
-  // console.log(token);
+  console.log(rating, review, food.id, token);
+  console.log(dataReview);
 
   return (
     <div className="min-w-[500px]">
@@ -187,7 +207,7 @@ const FoodDetails = () => {
               )}
             </h5>
             <img className="w-full mt-2" src={food.imageUrl} alt={food.name} />
-            <div className="flex items-start w-full mt-2">
+            <div className="flex items-start w-full mt-2 space-x-2">
               {like ? (
                 <button onClick={handleDislikeButton}>
                   <HeartFill width={30} fill={"#C51f1A"} />
@@ -197,6 +217,7 @@ const FoodDetails = () => {
                   <Heart width={30} fill={"#fff"} />
                 </button>
               )}
+              <div>{`Reviewed by ${dataReview && dataReview.length}`}</div>
             </div>
             <p className="text-lg mt-5">{food.description}</p>
             <ul className="flex flex-col justify-start w-full mt-10">
@@ -207,6 +228,59 @@ const FoodDetails = () => {
                 </li>
               ))}
             </ul>
+            <div className="w-full grid place-items-start mt-6 border-2">
+              <form className="flex flex-col space-y-2 w-full p-2 border-b-2">
+                <label htmlFor="food">Review:</label>
+                <select
+                  className="text-black w-min"
+                  value={rating}
+                  onChange={(e) => setRating(parseInt(e.target.value))}
+                >
+                  <option value={5}>★★★★★</option>
+                  <option value={4}>★★★★</option>
+                  <option value={3}>★★★</option>
+                  <option value={2}>★★</option>
+                  <option value={1}>★</option>
+                </select>
+                <textarea
+                  typeof="text"
+                  placeholder="Please share your thoughts about this food"
+                  className="text-black p-1"
+                  value={review}
+                  onChange={(e) => setReview(e.target.value)}
+                />
+                <div className="flex justify-end">
+                  <button
+                    className="p-2 border bg-slate-700 rounded-lg"
+                    onClick={handleSubmitReview}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+              <div>
+                {dataReview
+                  ? dataReview.map((review, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-col w-full py-4 border-b px-4"
+                      >
+                        <div className="text-yellow-500 mb-1">
+                          {ratingStar(review.rating)}
+                        </div>
+                        <div className="flex space-x-2">
+                          <img
+                            className="w-1/12 rounded-full object-cover object-center"
+                            src={review.user.profilePictureUrl}
+                          />
+                          <p>{review.user.name}</p>
+                        </div>
+                        <div>{review.review ? review.review : "-"}</div>
+                      </div>
+                    ))
+                  : null}
+              </div>
+            </div>
           </div>
         </section>
       </div>
