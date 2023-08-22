@@ -5,11 +5,11 @@ export const LikeFood = async (foodId, token) => {
   try {
     const requestBody = { foodId: foodId };
     const res = await axios.post(
-      `https://api-bootcamp.do.dibimbing.id/api/v1/like`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/like`,
       requestBody,
       {
         headers: {
-          apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+          apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },

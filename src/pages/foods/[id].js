@@ -24,6 +24,7 @@ const FoodDetails = () => {
   const [like, setLike] = useState("");
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
   const [dataReview, setDataReview] = useState("");
   const [inputReview, setInputReview] = useState("");
   const router = useRouter();
@@ -48,10 +49,10 @@ const FoodDetails = () => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          `https://api-bootcamp.do.dibimbing.id/api/v1/foods/${id}`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/foods/${id}`,
           {
             headers: {
-              apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+              apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
@@ -114,6 +115,7 @@ const FoodDetails = () => {
     event.preventDefault();
     const res = await InputReview(rating, review, food.id, token);
     setInputReview(res);
+    setReview("");
   };
 
   function formatDate(params) {
@@ -131,8 +133,8 @@ const FoodDetails = () => {
     return "★".repeat(params);
   }
 
-  console.log(rating, review, food.id, token);
-  console.log(dataReview);
+  // console.log(rating, review, food.id, token);
+  // console.log(dataReview);
 
   return (
     <div className="min-w-[500px]">
@@ -230,9 +232,11 @@ const FoodDetails = () => {
             </ul>
             <div className="w-full grid place-items-start mt-6 border-2">
               <form className="flex flex-col space-y-2 w-full p-2 border-b-2">
-                <label htmlFor="food">Review:</label>
+                <label htmlFor="food" className="text-2xl">
+                  Review:
+                </label>
                 <select
-                  className="text-black w-min"
+                  className="text-yellow-500 w-min"
                   value={rating}
                   onChange={(e) => setRating(parseInt(e.target.value))}
                 >
@@ -258,22 +262,24 @@ const FoodDetails = () => {
                   </button>
                 </div>
               </form>
-              <div>
+              <div className="w-full">
                 {dataReview
                   ? dataReview.map((review, index) => (
                       <div
                         key={index}
-                        className="flex flex-col w-full py-4 border-b px-4"
+                        className="flex flex-col w-full space-y-2 border-b p-4 "
                       >
-                        <div className="text-yellow-500 mb-1">
-                          {ratingStar(review.rating)}
-                        </div>
                         <div className="flex space-x-2">
                           <img
-                            className="w-1/12 rounded-full object-cover object-center"
+                            className="w-10 h-10 rounded-full object-cover object-center"
                             src={review.user.profilePictureUrl}
                           />
-                          <p>{review.user.name}</p>
+                          <div className="flex items-center">
+                            <p>{review.user.name}</p>
+                          </div>
+                        </div>
+                        <div className="text-yellow-500 text-lg">
+                          {ratingStar(review.rating)}
                         </div>
                         <div>{review.review ? review.review : "-"}</div>
                       </div>

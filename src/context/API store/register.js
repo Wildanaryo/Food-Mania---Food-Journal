@@ -21,11 +21,11 @@ export const registerApi = async (
       phoneNumber: isPhoneNumber,
     };
     const res = await axios.post(
-      `https://api-bootcamp.do.dibimbing.id/api/v1/register`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/register`,
       requestBody,
       {
         headers: {
-          apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+          apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
         },
       }
     );

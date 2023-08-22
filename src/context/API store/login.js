@@ -12,7 +12,7 @@ export const loginApi = async (isEmail, isPassword) => {
       requestBody,
       {
         headers: {
-          apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+          apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
         },
       }
     );

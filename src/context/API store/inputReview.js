@@ -8,11 +8,11 @@ export const InputReview = async (isRating, isReview, foodId, token) => {
       review: isReview,
     };
     const res = await axios.post(
-      `https://api-bootcamp.do.dibimbing.id/api/v1/rate-food/${foodId}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/rate-food/${foodId}`,
       requestBody,
       {
         headers: {
-          apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+          apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },

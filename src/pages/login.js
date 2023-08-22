@@ -142,7 +142,7 @@ function LoginPage() {
   // }
 
   // console.log(roleUser, isLogin, token);
-  console.log(process.env.BASE_URL);
+  // console.log(process.env.BASE_URL);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center h-screen w-full">
       <CustomHead title="Food Mania - Login Form" />

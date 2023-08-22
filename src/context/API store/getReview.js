@@ -4,10 +4,10 @@ import React from "react";
 export const GetReview = async (id) => {
   try {
     const res = await axios.get(
-      `https://api-bootcamp.do.dibimbing.id/api/v1/food-rating/${id}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/food-rating/${id}`,
       {
         headers: {
-          apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+          apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
           "Content-Type": "application/json",
         },
       }

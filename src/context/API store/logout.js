@@ -4,10 +4,10 @@ import React from "react";
 export const LogoutApi = async (token) => {
   try {
     const res = await axios.get(
-      `https://api-bootcamp.do.dibimbing.id/api/v1/logout`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/logout`,
       {
         headers: {
-          apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+          apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
           Authorization: `Bearer ${token}`,
         },
       }
