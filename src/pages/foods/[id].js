@@ -1,8 +1,10 @@
 import CustomHead from "@/components/customHead";
 import Navbar from "@/components/navbar";
 import { FoodContext } from "@/context/FoodProvider";
+import EditIcon from "@/icon/edit-icon";
 import Heart from "@/icon/heart";
 import HeartFill from "@/icon/heart-fill";
+import TrashIcon from "@/icon/trash-icon";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
@@ -94,7 +96,7 @@ const FoodDetails = () => {
 
   const handleDelete = async () => {
     await deleteFood(food.id);
-    router.push("/");
+    router.push("/all-foods");
   };
 
   const handleUpdate = () => {
@@ -170,24 +172,6 @@ const FoodDetails = () => {
       >
         <CustomHead title={`Food Mania- ${formatName(food.name)}`} />
 
-        <div className="grid place-items-center">
-          {roleUser === "admin" && (
-            <div className="flex justify-between mb-8 w-11/12">
-              <button
-                className="bg-blue-500 px-4 py-2 rounded"
-                onClick={() => setShowDelete(true)}
-              >
-                Delete Food
-              </button>
-              <button
-                className="bg-blue-500 px-4 py-2 rounded"
-                onClick={handleUpdate}
-              >
-                Edit Food
-              </button>
-            </div>
-          )}
-        </div>
         <section className="grid place-items-center">
           <div className="grid place-items-center w-11/12 md:w-2/3">
             <h1 className="text-center text-6xl">{formatName(food.name)}</h1>
@@ -209,17 +193,35 @@ const FoodDetails = () => {
               )}
             </h5>
             <img className="w-full mt-2" src={food.imageUrl} alt={food.name} />
-            <div className="flex items-start w-full mt-2 space-x-2">
-              {like ? (
-                <button onClick={handleDislikeButton}>
-                  <HeartFill width={30} fill={"#C51f1A"} />
-                </button>
-              ) : (
-                <button onClick={handleLikeButton}>
-                  <Heart width={30} fill={"#fff"} />
-                </button>
+            <div className="flex justify-between  items-center w-full mt-2 ">
+              <div className="flex items-center space-x-2">
+                {like ? (
+                  <button onClick={handleDislikeButton}>
+                    <HeartFill width={30} fill={"#C51f1A"} />
+                  </button>
+                ) : (
+                  <button onClick={handleLikeButton}>
+                    <Heart width={30} fill={"#fff"} />
+                  </button>
+                )}
+                <div>{`Reviewed by ${dataReview && dataReview.length}`}</div>
+              </div>
+              {roleUser === "admin" && (
+                <div className="flex items-center space-x-2">
+                  <button
+                    className="button-delete bg-blue-500 hover:bg-red-500 px-4 py-2 rounded"
+                    onClick={() => setShowDelete(true)}
+                  >
+                    <TrashIcon width={25} fill={"#fff"} />
+                  </button>
+                  <button
+                    className="button-edit bg-blue-500 px-4 py-2 rounded"
+                    onClick={handleUpdate}
+                  >
+                    <EditIcon width={25} fill={"#fff"} />
+                  </button>
+                </div>
               )}
-              <div>{`Reviewed by ${dataReview && dataReview.length}`}</div>
             </div>
             <p className="text-lg mt-5">{food.description}</p>
             <ul className="flex flex-col justify-start w-full mt-10">

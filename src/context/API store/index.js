@@ -9,3 +9,4 @@ export * from "./like";
 export * from "./dislike";
 export * from "./getReview";
 export * from "./inputReview";
+export * from "./getUserInfo";

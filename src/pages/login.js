@@ -60,6 +60,7 @@ function LoginPage() {
       setIsLogin(true);
       if (typeof window !== "undefined") {
         localStorage.setItem("token", res.token);
+        localStorage.setItem("role", roleUser);
         router.push("/");
       }
     }

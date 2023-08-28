@@ -22,17 +22,12 @@ const Navbar = () => {
         </button>
       </Link>
       <nav className="w-full flex flex-col items-center justify-center">
-        <div className="md:w-10/12 w-full h-10 flex flex-row justify-around text-2xl">
+        <div className="lg:w-10/12 w-full h-10 flex flex-row justify-around text-2xl">
           <MenuItem title="CHICKEN" media="hover:border-b-2" />
-          <MenuItem
-            title="PASTA/NOODLES"
-            media="hover:border-b-2 md:block hidden"
-          />
           <MenuItem
             title="BREAKFAST"
             media="hover:border-b-2 xl:block hidden"
           />
-          <MenuItem title="TACOS" media="hover:border-b-2 xl:block hidden" />
           <MenuItem title="TRADITIONAL FOOD" media="hover:border-b-2" />
           <MenuItem
             title="GLUTEN-FREE"

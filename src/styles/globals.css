@@ -25,3 +25,51 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.button-delete {
+  position: relative;
+}
+
+.button-delete::after {
+  content: "Delete";
+  position: absolute;
+  top: 45px;
+  left: 70px;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid white;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  background-color: grey;
+  padding: 5px;
+  animation: ease-in-out;
+}
+
+.button-delete:hover::after {
+  opacity: 1;
+}
+
+.button-edit {
+  position: relative;
+}
+
+.button-edit::after {
+  content: "Edit";
+  position: absolute;
+  top: 45px;
+  left: 50px;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid white;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  background-color: grey;
+  padding: 5px;
+  animation: ease-in-out;
+}
+
+.button-edit:hover::after {
+  opacity: 1;
+}
