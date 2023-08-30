@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 
 export default function CreateFood() {
-  const { createFood, dataFood } = useContext(FoodContext);
+  const { createFood, token, setToken } = useContext(FoodContext);
 
   const [nameFood, setNameFood] = useState("");
   const [imgFood, setImgFood] = useState("");
@@ -14,6 +14,11 @@ export default function CreateFood() {
   const [ingreFood, setIngreFood] = useState("");
 
   const router = useRouter();
+
+  if (typeof window !== "undefined") {
+    const tokenUser = localStorage.getItem("token");
+    setToken(tokenUser);
+  }
 
   const handleCreateFood = async (event) => {
     event.preventDefault();
@@ -26,7 +31,8 @@ export default function CreateFood() {
           formatName(nameFood),
           descFood,
           ingreFood,
-          uploadedImageUrl
+          uploadedImageUrl,
+          token
         );
         router.push(`/`);
       }

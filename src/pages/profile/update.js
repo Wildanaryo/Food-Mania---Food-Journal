@@ -3,16 +3,18 @@ import { FoodContext } from "@/context/FoodProvider";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-const UpdateFood = ({ food }) => {
-  const { UpdateFood, token, setToken } = useContext(FoodContext);
+const UpdateProfile = () => {
+  const { UpdateProfile, token, setToken, GetUserInfo } =
+    useContext(FoodContext);
   const router = useRouter();
 
-  const [nameFood, setNameFood] = useState(food.name);
-  const [imgFood, setImgFood] = useState(food.imageUrl);
-  const [descFood, setDescFood] = useState(food.description);
-  const [ingreFood, setIngreFood] = useState([food.ingredients]);
+  const [userInfo, setUserInfo] = useState("");
+  const [nameUser, setNameUser] = useState("");
+  const [imgUser, setImgUser] = useState("");
+  const [phoneUser, setPhoneUser] = useState("");
+  const [emailUser, setEmailUser] = useState("");
 
   if (typeof window !== "undefined") {
     const tokenUser = localStorage.getItem("token");
@@ -31,12 +33,22 @@ const UpdateFood = ({ food }) => {
     event.preventDefault();
 
     try {
-      if (imgFood !== food.imageUrl) {
+      let newImgUser = imgUser;
+      if (imgUser !== userInfo.profilePictureUrl) {
         const uploadedImageUrl = await handleUploadImage();
-        setImgFood(uploadedImageUrl);
+        newImgUser = uploadedImageUrl;
+      } else {
+        newImgUser = imgUser;
       }
-      await UpdateFood(nameFood, descFood, ingreFood, imgFood, food.id, token);
-      router.push(`/foods/${food.id}`);
+
+      await UpdateProfile(
+        formatName(nameUser),
+        emailUser,
+        newImgUser,
+        phoneUser,
+        token
+      );
+      router.push(`/profile/user`);
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +57,7 @@ const UpdateFood = ({ food }) => {
   const handleUploadImage = async () => {
     try {
       const formData = new FormData();
-      formData.append("image", imgFood);
+      formData.append("image", imgUser);
 
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/upload-image`,
@@ -70,22 +82,35 @@ const UpdateFood = ({ food }) => {
     router.push("/");
   };
 
-  function formatIngredients(params) {
-    const result = params.map((item) => {
-      const trimmedItem = item.trim();
-      const capitalizedItem =
-        trimmedItem.charAt(0).toUpperCase() +
-        trimmedItem.slice(1).toLowerCase();
-      return capitalizedItem;
-    });
+  const fetchDataUser = async () => {
+    const res = await GetUserInfo(token);
+    setUserInfo(res);
+  };
 
-    return result;
+  useEffect(() => {
+    if (token) {
+      fetchDataUser();
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (userInfo) {
+      setNameUser(userInfo.name);
+      setImgUser(userInfo.profilePictureUrl);
+      setPhoneUser(userInfo.phoneNumber);
+      setEmailUser(userInfo.email);
+    }
+  }, [userInfo]);
+
+  if (!userInfo) {
+    return null;
   }
 
-  console.log(ingreFood);
+  console.log(imgUser);
+
   return (
     <div className="p-20 w-full flex flex-col items-center space-y-4">
-      <CustomHead title={`Food Mania - Update Food ${formatName(food.name)}`} />
+      <CustomHead title={`Food Mania - Update Profile`} />
       <div className="flex flex-col items-start w-1/2">
         <button
           className="bg-orange-800 px-4 py-2 rounded w-40"
@@ -95,55 +120,59 @@ const UpdateFood = ({ food }) => {
         </button>
       </div>
       <form className="w-[50%] border-4 p-4">
-        <div className="text-2xl text-center mb-6">Form Update Food</div>
+        <div className="text-2xl text-center mb-6">Form Update Profile</div>
         <div className="mb-6">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Name Food
+            Name
           </label>
           <input
             type="text"
-            value={nameFood}
+            value={nameUser}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Name of Your Food"
-            onChange={(e) => setNameFood(e.target.value)}
+            onChange={(e) => setNameUser(e.target.value)}
             required
           />
         </div>
         <div className="mb-6">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Description
-          </label>
-          <textarea
-            type="text"
-            value={descFood}
-            className="bg-gray-50 h-40 border border-gray-300 text-gray-900 text-sm min-h-min rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Description"
-            onChange={(e) => setDescFood(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-6">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Ingredients
+            E-mail
           </label>
           <input
             type="text"
-            value={ingreFood}
+            value={emailUser}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Ingredients"
-            onChange={(e) => setIngreFood(e.target.value)}
+            onChange={(e) => setEmailUser(e.target.value)}
             required
           />
         </div>
         <div className="mb-6">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Image Url
+            Phone Number
           </label>
-          <img className="w-full mb-2" src={food.imageUrl} alt={food.name} />
+          <input
+            type="text"
+            value={phoneUser}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm min-h-min rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Description"
+            onChange={(e) => setPhoneUser(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Profile Picture
+          </label>
+          <img
+            className="w-full mb-2"
+            src={userInfo.profilePictureUrl}
+            alt={userInfo.name}
+          />
           <input
             type="file"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onChange={(e) => setImgFood(e.target.files[0])}
+            onChange={(e) => setImgUser(e.target.files[0])}
             required
           />
         </div>
@@ -152,30 +181,11 @@ const UpdateFood = ({ food }) => {
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           onClick={handleUpdate}
         >
-          Submit
+          Update
         </button>
       </form>
     </div>
   );
 };
 
-export async function getServerSideProps({ params }) {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/foods/${params.id}`,
-    {
-      headers: {
-        apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pZnRhaGZhcmhhbkBnbWFpbC5jb20iLCJ1c2VySWQiOiJjYTIzZDdjYy02Njk1LTQzNGItODE2Yy03ZTlhNWMwNGMxNjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjE4NzUzMjF9.wV2OECzC25qNujtyb9YHyzYIbYEV-wud3TQsYv7oB4Q`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  console.log(params);
-  const data = await res.data.data;
-  console.log(data);
-  return {
-    props: { food: data },
-  };
-}
-
-export default UpdateFood;
+export default UpdateProfile;

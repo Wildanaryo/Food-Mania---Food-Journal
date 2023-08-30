@@ -27,6 +27,10 @@ function User() {
     return null;
   }
 
+  const handleUpdateButton = () => {
+    router.push(`/profile/update/`);
+  };
+
   console.log(userInfo);
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
@@ -54,7 +58,10 @@ function User() {
             <div className="text-lg font-semibold">{userInfo.email}</div>
           </div>
           <div className="w-11/12 flex justify-end items-center">
-            <button className="p-4 border rounded-3xl hover:bg-blue-700">
+            <button
+              onClick={handleUpdateButton}
+              className="p-4 border rounded-3xl hover:bg-blue-700"
+            >
               Update
             </button>
           </div>

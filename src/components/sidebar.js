@@ -49,7 +49,7 @@ const Sidebar = () => {
     router.push("/profile/user");
   };
 
-  console.log(userInfo);
+  console.log(roleUser);
   return (
     <div className="sticky text-white h-screen border-r left-0 top-0 flex flex-col p-4 text-xl">
       <div className="flex w-full mb-4">

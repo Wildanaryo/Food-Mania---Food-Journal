@@ -1,21 +1,21 @@
 import axios from "axios";
 
-export const createFood = async (
-  nameFood,
-  descFood,
-  ingreFood,
-  imgFood,
+export const UpdateProfile = async (
+  nameUser,
+  emailUser,
+  profilePictureUrl,
+  phoneNumber,
   token
 ) => {
   try {
     const requestBody = {
-      name: nameFood,
-      description: descFood,
-      imageUrl: imgFood,
-      ingredients: [ingreFood],
+      name: nameUser,
+      email: emailUser,
+      profilePictureUrl: profilePictureUrl,
+      phoneNumber: phoneNumber,
     };
     const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/create-food`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/update-profile`,
       requestBody,
       {
         headers: {

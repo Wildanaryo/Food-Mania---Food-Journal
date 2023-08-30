@@ -60,7 +60,7 @@ function LoginPage() {
       setIsLogin(true);
       if (typeof window !== "undefined") {
         localStorage.setItem("token", res.token);
-        localStorage.setItem("role", roleUser);
+        localStorage.setItem("role", res.user.role);
         router.push("/");
       }
     }
@@ -130,7 +130,6 @@ function LoginPage() {
           },
         }
       );
-      console.log(res);
       return res.data.url;
     } catch (error) {
       console.log(error);
@@ -138,12 +137,6 @@ function LoginPage() {
     }
   };
 
-  // if (pass !== confirmPass) {
-  //   setMessage("Passwords do not match.")
-  // }
-
-  // console.log(roleUser, isLogin, token);
-  // console.log(process.env.BASE_URL);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center h-screen w-full">
       <CustomHead title="Food Mania - Login Form" />

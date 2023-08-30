@@ -12,6 +12,7 @@ import {
   GetReview,
   InputReview,
   GetUserInfo,
+  UpdateProfile,
 } from "../context/API store/index.js";
 
 export const FoodContext = createContext();
@@ -61,6 +62,7 @@ export const FoodProvider = ({ children }) => {
         GetReview,
         InputReview,
         GetUserInfo,
+        UpdateProfile,
       }}
     >
       {children}

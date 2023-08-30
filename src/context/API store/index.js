@@ -10,3 +10,4 @@ export * from "./dislike";
 export * from "./getReview";
 export * from "./inputReview";
 export * from "./getUserInfo";
+export * from "./updateProfile";
