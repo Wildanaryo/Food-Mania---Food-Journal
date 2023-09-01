@@ -21,7 +21,7 @@ const Navbar = () => {
           FOOD MANIA<span className="text-xl">mantap</span>
         </button>
       </Link>
-      <nav className="w-full flex flex-col items-center justify-center">
+      <nav className="w-full sm:flex hidden flex-col items-center justify-center ">
         <div className="lg:w-10/12 w-full h-10 flex flex-row justify-around text-2xl">
           <MenuItem title="CHICKEN" media="hover:border-b-2" />
           <MenuItem

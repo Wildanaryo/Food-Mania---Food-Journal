@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { FoodContext } from "@/context/FoodProvider";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Footer from "@/components/footer";
 import CustomHead from "@/components/customHead";
@@ -8,10 +8,19 @@ import { useRouter } from "next/router";
 import Navbar from "@/components/navbar";
 import { LogoutApi } from "@/context/API store";
 import Sidebar from "@/components/sidebar";
+import SidebarIcon from "@/icon/sidebar";
 
 export default function Home() {
-  const { isLogin, dataFood, roleUser, token, setToken, setIsLogin } =
-    useContext(FoodContext);
+  const {
+    isLogin,
+    dataFood,
+    roleUser,
+    token,
+    setToken,
+    setIsLogin,
+    isSidebarOpen,
+    setIsSidebarOpen,
+  } = useContext(FoodContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -66,6 +75,10 @@ export default function Home() {
     return "★".repeat(params);
   }
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(true);
+  };
+
   //function for latest food contents
   const foods = (params) => {
     return (
@@ -82,17 +95,32 @@ export default function Home() {
     );
   };
 
-  console.log(isLogin);
+  console.log(isSidebarOpen);
   return (
-    <div className="flex justify-center min-w-[500px]">
+    //
+    <div className="flex justify-center min-w-[600px]">
       <div className="flex w-full">
         {/* Sidebar Content  */}
-        <div className="md:w-96 w-40">
+        <div
+          className={`w-96 md:block h-screen ${
+            isSidebarOpen
+              ? "block absolute top-0 left-0 bg-black z-10"
+              : "hidden"
+          }`}
+        >
           <Sidebar />
         </div>
+        <button
+          onClick={toggleSidebar}
+          className="md:hidden block absolute top-2 left-4"
+        >
+          <SidebarIcon width={30} fill={"#fff"} />
+        </button>
 
         {/* Main Content  */}
-        <div className="w-full">
+        <div
+          className={`w-full ${isSidebarOpen ? "opacity-20" : "opacity-100"}`}
+        >
           <div
             className={`flex bg-black text-white min-h-screen flex-col items-center justify-between gap-6`}
           >

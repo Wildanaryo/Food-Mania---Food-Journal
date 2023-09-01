@@ -6,8 +6,15 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 
 const Sidebar = () => {
-  const { setRoleUser, roleUser, token, setToken, GetUserInfo } =
-    useContext(FoodContext);
+  const {
+    setRoleUser,
+    roleUser,
+    token,
+    setToken,
+    GetUserInfo,
+    isSidebarOpen,
+    setIsSidebarOpen,
+  } = useContext(FoodContext);
   const router = useRouter();
 
   const [userInfo, setUserInfo] = useState("");
@@ -49,9 +56,21 @@ const Sidebar = () => {
     router.push("/profile/user");
   };
 
+  const buttonHideSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
   console.log(roleUser);
   return (
     <div className="sticky text-white h-screen border-r left-0 top-0 flex flex-col p-4 text-xl">
+      {isSidebarOpen && (
+        <button
+          onClick={buttonHideSidebar}
+          className="absolute top-2 right-4 text-white text-2xl"
+        >
+          X
+        </button>
+      )}
       <div className="flex w-full mb-4">
         <Image
           src="/LogoFoodMania.png"
@@ -65,7 +84,7 @@ const Sidebar = () => {
         <div className="space-y-2 flex flex-col">
           <Link
             href={`/`}
-            className="flex md:justify-start justify-center items-center hover:bg-slate-800 rounded-3xl py-2 px-4 "
+            className="flex justify-start items-center hover:bg-slate-800 rounded-3xl py-2 px-4 "
           >
             <Image
               src="/home.png"
@@ -74,11 +93,11 @@ const Sidebar = () => {
               width={50}
               height={50}
             />
-            <p className="ml-3 md:block hidden">Home</p>
+            <p className="ml-3">Home</p>
           </Link>
           <Link
             href={`/all-foods/`}
-            className="flex md:justify-start justify-center items-center hover:bg-slate-800 rounded-3xl py-2 px-4 "
+            className="flex justify-start items-center hover:bg-slate-800 rounded-3xl py-2 px-4 "
           >
             <Image
               src="/fork-and-knife-silhouette.png"
@@ -87,12 +106,12 @@ const Sidebar = () => {
               width={50}
               height={50}
             />
-            <p className="ml-3 md:block hidden">All Foods</p>
+            <p className="ml-3">All Foods</p>
           </Link>
           {roleUser === "admin" && (
             <Link
               href={`/foods/create-food/`}
-              className="flex md:justify-start justify-center items-center hover:bg-slate-800 rounded-3xl py-2 px-4"
+              className="flex items-center hover:bg-slate-800 rounded-3xl py-2 px-4"
             >
               <img
                 src="/add-square-button.png"
@@ -101,7 +120,7 @@ const Sidebar = () => {
                 width={50}
                 height={50}
               />
-              <p className="ml-3 md:block hidden">Create Foods</p>
+              <p className="ml-3">Create Foods</p>
             </Link>
           )}
         </div>
@@ -118,7 +137,7 @@ const Sidebar = () => {
                 width={50}
                 height={50}
               />
-              <p className="ml-3 md:block hidden text-left">{userInfo.name}</p>
+              <p className="ml-3 text-left">{userInfo.name}</p>
             </button>
           )}
           {/* <button className="flex mx-auto md:mx-0 items-center hover:bg-slate-800 rounded-3xl py-2 px-4">
@@ -142,7 +161,7 @@ const Sidebar = () => {
               width={50}
               height={50}
             />
-            <p className="ml-3 md:block hidden">Sign-Out</p>
+            <p className="ml-3">Sign-Out</p>
           </button>
         </div>
       </div>

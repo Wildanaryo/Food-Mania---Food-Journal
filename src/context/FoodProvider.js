@@ -22,6 +22,7 @@ export const FoodProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [roleUser, setRoleUser] = useState("");
   const [token, setToken] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const fetchFood = async () => {
     try {
@@ -63,6 +64,8 @@ export const FoodProvider = ({ children }) => {
         InputReview,
         GetUserInfo,
         UpdateProfile,
+        isSidebarOpen,
+        setIsSidebarOpen,
       }}
     >
       {children}
