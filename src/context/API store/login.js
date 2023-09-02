@@ -16,7 +16,6 @@ export const loginApi = async (isEmail, isPassword) => {
         },
       }
     );
-    console.log(res.data);
     return res.data;
   } catch (error) {
     return error.response.data;

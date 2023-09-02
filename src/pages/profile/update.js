@@ -106,8 +106,6 @@ const UpdateProfile = () => {
     return null;
   }
 
-  console.log(imgUser);
-
   return (
     <div className="p-20 w-full flex flex-col items-center space-y-4">
       <CustomHead title={`Food Mania - Update Profile`} />
@@ -165,7 +163,7 @@ const UpdateProfile = () => {
             Profile Picture
           </label>
           <img
-            className="w-full mb-2"
+            className="mb-2 w-52"
             src={userInfo.profilePictureUrl}
             alt={userInfo.name}
           />

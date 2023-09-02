@@ -25,8 +25,6 @@ export const UpdateProfile = async (
         },
       }
     );
-
-    console.log(res);
   } catch (error) {
     console.log(error);
   }

@@ -13,7 +13,6 @@ export const GetUserInfo = async (token) => {
         },
       }
     );
-    console.log(res);
     return res.data.user;
   } catch (error) {
     console.log(error);

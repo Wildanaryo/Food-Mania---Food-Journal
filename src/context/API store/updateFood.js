@@ -26,8 +26,6 @@ export const UpdateFood = async (
         },
       }
     );
-
-    console.log(res.data);
   } catch (error) {
     console.log(error);
   }

@@ -1,14 +1,11 @@
-import Head from "next/head";
 import { FoodContext } from "@/context/FoodProvider";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Link from "next/link";
 import Footer from "@/components/footer";
 import CustomHead from "@/components/customHead";
 import { useRouter } from "next/router";
 import Navbar from "@/components/navbar";
-import { LogoutApi } from "@/context/API store";
-import Sidebar from "@/components/sidebar";
-import SidebarIcon from "@/icon/sidebar";
+import SidebarContent from "@/components/sidebarContent";
 
 export default function Home() {
   const {
@@ -19,7 +16,6 @@ export default function Home() {
     setToken,
     setIsLogin,
     isSidebarOpen,
-    setIsSidebarOpen,
   } = useContext(FoodContext);
   const router = useRouter();
 
@@ -28,34 +24,17 @@ export default function Home() {
     if (typeof window !== "undefined") {
       const itemToken = localStorage.getItem("token");
       if (itemToken) {
-        console.log(itemToken);
         setToken(itemToken);
         setIsLogin(true);
       } else {
         router.push("/login");
       }
     }
-
-    if (!isLogin) {
-      console.log(isLogin);
-    }
   }, [isLogin]);
 
   if (!dataFood) {
     return null;
   }
-
-  // //handle logout
-  // const handleLogoutAccount = async () => {
-  //   const res = await LogoutApi(token);
-  //   setToken("");
-  //   if (typeof window !== "undefined") {
-  //     const itemToken = localStorage.getItem("token");
-  //     console.log(itemToken);
-  //   }
-  //   router.push("/login");
-  //   console.log(res);
-  // };
 
   //change format name of food
   function formatName(params) {
@@ -75,10 +54,6 @@ export default function Home() {
     return "★".repeat(params);
   }
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(true);
-  };
-
   //function for latest food contents
   const foods = (params) => {
     return (
@@ -95,31 +70,18 @@ export default function Home() {
     );
   };
 
-  console.log(isSidebarOpen);
   return (
     //
     <div className="flex justify-center min-w-[600px]">
       <div className="flex w-full">
         {/* Sidebar Content  */}
-        <div
-          className={`w-96 md:block h-screen ${
-            isSidebarOpen
-              ? "block absolute top-0 left-0 bg-black z-10"
-              : "hidden"
-          }`}
-        >
-          <Sidebar />
-        </div>
-        <button
-          onClick={toggleSidebar}
-          className="md:hidden block absolute top-2 left-4"
-        >
-          <SidebarIcon width={30} fill={"#fff"} />
-        </button>
+        <SidebarContent />
 
         {/* Main Content  */}
         <div
-          className={`w-full ${isSidebarOpen ? "opacity-20" : "opacity-100"}`}
+          className={`w-full md:ml-60 ml-0 mt-10 sm:mt-0 ${
+            isSidebarOpen ? "opacity-20" : "opacity-100"
+          }`}
         >
           <div
             className={`flex bg-black text-white min-h-screen flex-col items-center justify-between gap-6`}
@@ -127,15 +89,6 @@ export default function Home() {
             <CustomHead title="Food Mania" />
             <section className="w-full flex flex-col place-items-center justify-center gap-10">
               <Navbar />
-              {/* {roleUser === "admin" && (
-                <div className="space-y-2 flex flex-col justify-center items-center">
-                  <Link href={`/foods/create-food/`}>
-                    <button className="bg-slate-500 px-4 py-2 rounded hover:scale-105 transition-transform ease-in-out">
-                      Create Food
-                    </button>
-                  </Link>
-                </div>
-              )} */}
 
               {/* Main food in Landing Page */}
               <section className="w-full flex flex-col items-center ">
@@ -226,7 +179,6 @@ export default function Home() {
                   )}
                 </div>
               </section>
-
               <Footer />
             </section>
           </div>

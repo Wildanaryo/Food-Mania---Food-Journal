@@ -32,7 +32,6 @@ function LoginPage() {
     setEmailAcc("");
     setPassAcc("");
     setMessage("");
-    // setRegister(!register);
   };
 
   const handleShowPassword = (event) => {
@@ -96,12 +95,10 @@ function LoginPage() {
             uploadedImageUrl,
             phoneAcc
           );
-          // router.push(`/`);
-          console.log(res);
+
           if (res.status !== 200) {
             setMessage(res.response.data.message);
           } else {
-            // console.log(res);
             setLogin(true);
             setEmailAcc("");
             setPassAcc("");
@@ -121,11 +118,11 @@ function LoginPage() {
       formData.append("image", profPictAcc);
 
       const res = await axios.post(
-        `https://api-bootcamp.do.dibimbing.id/api/v1/upload-image`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/upload-image`,
         formData,
         {
           headers: {
-            apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+            apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
             "Content-Type": "multipart/form-data",
           },
         }
@@ -138,7 +135,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center h-screen w-full">
+    <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center h-screen w-full min-w-[600px]">
       <CustomHead title="Food Mania - Login Form" />
       <div className="flex flex-col w-[550px] p-8">
         <label
@@ -223,8 +220,7 @@ function LoginPage() {
         {/* Register Form */}
         {!login && (
           <div>
-            <h1 className="text-6xl mb-14">Get Started Now</h1>
-
+            <h1 className="text-6xl mb-8 mt-4">Get Started Now</h1>
             <form className="w-full text-white">
               <div className="mb-6">
                 <label className="block mb-2 text-xl font-medium">Name</label>

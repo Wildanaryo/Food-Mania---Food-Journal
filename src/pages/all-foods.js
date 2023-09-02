@@ -1,6 +1,8 @@
 import CustomHead from "@/components/customHead";
+import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
+import SidebarContent from "@/components/sidebarContent";
 import { FoodContext } from "@/context/FoodProvider";
 import Heart from "@/icon/heart";
 import HeartFill from "@/icon/heart-fill";
@@ -9,7 +11,6 @@ import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 
 function Foods() {
-  const [image, setImage] = useState("");
   const {
     dataFood,
     getFood,
@@ -33,7 +34,6 @@ function Foods() {
     if (typeof window !== "undefined") {
       const itemToken = localStorage.getItem("token");
       if (itemToken) {
-        console.log(itemToken);
         setToken(itemToken);
         // setIsLogin(true);
       } else {
@@ -65,32 +65,17 @@ function Foods() {
     return <div className="text-yellow-500">{"★".repeat(params)}</div>;
   }
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(true);
-  };
-
-  console.log(dataFood);
   return (
     <div className="flex justify-center min-w-[600px]">
       <div className="flex w-full">
         {/* Sidebar Content  */}
+        <SidebarContent />
+
         <div
-          className={`w-96 md:block h-screen ${
-            isSidebarOpen
-              ? "block absolute top-0 left-0 bg-black z-10"
-              : "hidden"
+          className={`space-y-10 w-full md:ml-60 ml-0 mt-10 sm:mt-0 ${
+            isSidebarOpen ? "opacity-20" : "opacity-100"
           }`}
         >
-          <Sidebar />
-        </div>
-        <button
-          onClick={toggleSidebar}
-          className="md:hidden block absolute top-2 left-4"
-        >
-          <SidebarIcon width={30} fill={"#fff"} />
-        </button>
-
-        <div className="space-y-10">
           <Navbar />
           <CustomHead title="Food Mania - All Food" />
           <section className="w-full flex flex-col items-center space-y-10">
@@ -99,7 +84,7 @@ function Foods() {
                   <Link
                     key={index}
                     href={`foods/${food.id}`}
-                    className="w-11/12 md:w-3/4 grid grid-cols-1 md:grid-cols-2 gap-0 hover:outline"
+                    className="w-11/12 md:w-3/4 grid grid-cols-1 gap-0 hover:outline"
                   >
                     <div className="h-96 w-full">
                       <img
@@ -124,6 +109,7 @@ function Foods() {
                   </Link>
                 ))
               : null}
+            <Footer />
           </section>
         </div>
       </div>

@@ -1,27 +1,37 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ComingSoonCard } from "./comingSoonCard";
 import { MenuItem } from "./menuItem";
+import SidebarIcon from "@/icon/sidebar";
+import { FoodContext } from "@/context/FoodProvider";
 
 const Navbar = () => {
-  const [isShowCard, setIsShowCard] = useState(false);
+  const { isSidebarOpen, setIsSidebarOpen } = useContext(FoodContext);
 
-  const handleShowWarning = () => {
-    setIsShowCard(true);
-
-    setTimeout(() => {
-      setIsShowCard(false);
-    }, 5000);
+  const toggleSidebar = () => {
+    setIsSidebarOpen(true);
   };
 
   return (
-    <div className="w-full flex flex-col place-items-center justify-center gap-10">
-      <Link href={"/"}>
-        <button className="text-6xl hover:scale-110 transition-all ease-in-out">
-          FOOD MANIA<span className="text-xl">mantap</span>
+    <div
+      className={`w-full flex flex-col place-items-center justify-center gap-10 ${
+        isSidebarOpen ? "opacity-20" : "opacity-100"
+      }`}
+    >
+      <div className="fixed top-0 w-full flex justify-center bg-black ">
+        <Link href={"/"}>
+          <button className="text-6xl hover:scale-110 transition-all ease-in-out">
+            FOOD MANIA<span className="text-xl">mantap</span>
+          </button>
+        </Link>
+        <button
+          onClick={toggleSidebar}
+          className="md:hidden block absolute top-4 left-4"
+        >
+          <SidebarIcon width={30} fill={"#fff"} />
         </button>
-      </Link>
-      <nav className="w-full sm:flex hidden flex-col items-center justify-center ">
+      </div>
+      <nav className="w-full sm:flex hidden flex-col items-center justify-center mt-16">
         <div className="lg:w-10/12 w-full h-10 flex flex-row justify-around text-2xl">
           <MenuItem title="CHICKEN" media="hover:border-b-2" />
           <MenuItem

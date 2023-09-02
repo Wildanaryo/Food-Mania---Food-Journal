@@ -26,10 +26,9 @@ const Sidebar = () => {
     if (typeof window !== "undefined") {
       const itemToken = localStorage.removeItem("token");
       const roleUser = localStorage.removeItem("role");
-      console.log(itemToken, roleUser);
     }
+    setIsSidebarOpen(false);
     router.push("/login");
-    console.log(res);
   };
 
   if (typeof window !== "undefined") {
@@ -45,7 +44,9 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
-    fetchUserInfo();
+    if (token) {
+      fetchUserInfo();
+    }
   }, [token]);
 
   if (!userInfo) {
@@ -60,9 +61,8 @@ const Sidebar = () => {
     setIsSidebarOpen(false);
   };
 
-  console.log(roleUser);
   return (
-    <div className="sticky text-white h-screen border-r left-0 top-0 flex flex-col p-4 text-xl">
+    <div className=" text-white h-full border-r left-0 top-0 flex flex-col p-4 text-xl">
       {isSidebarOpen && (
         <button
           onClick={buttonHideSidebar}
@@ -140,16 +140,7 @@ const Sidebar = () => {
               <p className="ml-3 text-left">{userInfo.name}</p>
             </button>
           )}
-          {/* <button className="flex mx-auto md:mx-0 items-center hover:bg-slate-800 rounded-3xl py-2 px-4">
-            <Image
-              src="/user-shape.png"
-              alt="Update Profile"
-              className="w-7"
-              width={50}
-              height={50}
-            />
-            <p className="ml-3 md:block hidden">Update Profile</p>
-          </button> */}
+
           <button
             className="flex mx-auto md:mx-0 hover:bg-red-700 rounded-3xl py-2 px-4"
             onClick={handleLogoutAccount}

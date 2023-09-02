@@ -31,9 +31,18 @@ function User() {
     router.push(`/profile/update/`);
   };
 
-  console.log(userInfo);
+  const handleJumpHome = () => {
+    router.push("/");
+  };
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
+      <button
+        className="bg-orange-800 mb-4 px-4 py-2 rounded w-40"
+        onClick={handleJumpHome}
+      >
+        Home
+      </button>
       <CustomHead title="Profile User" />
       {userInfo && (
         <div className="bg-slate-700 text-white flex flex-col justify-center items-center rounded-3xl w-[500px] h-[800px] space-y-3">

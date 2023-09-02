@@ -70,23 +70,10 @@ const UpdateFood = ({ food }) => {
     router.push("/");
   };
 
-  function formatIngredients(params) {
-    const result = params.map((item) => {
-      const trimmedItem = item.trim();
-      const capitalizedItem =
-        trimmedItem.charAt(0).toUpperCase() +
-        trimmedItem.slice(1).toLowerCase();
-      return capitalizedItem;
-    });
-
-    return result;
-  }
-
-  console.log(ingreFood);
   return (
-    <div className="p-20 w-full flex flex-col items-center space-y-4">
+    <div className="p-20 w-full flex flex-col items-center space-y-4 min-w-[600px]">
       <CustomHead title={`Food Mania - Update Food ${formatName(food.name)}`} />
-      <div className="flex flex-col items-start w-1/2">
+      <div className="flex flex-col items-center">
         <button
           className="bg-orange-800 px-4 py-2 rounded w-40"
           onClick={handleJumpHome}
@@ -94,7 +81,7 @@ const UpdateFood = ({ food }) => {
           Home
         </button>
       </div>
-      <form className="w-[50%] border-4 p-4">
+      <form className="lg:w-[50%] w-[80%] border-4 p-4 ">
         <div className="text-2xl text-center mb-6">Form Update Food</div>
         <div className="mb-6">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -172,7 +159,6 @@ export async function getServerSideProps({ params }) {
   );
   console.log(params);
   const data = await res.data.data;
-  console.log(data);
   return {
     props: { food: data },
   };

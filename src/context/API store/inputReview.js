@@ -18,7 +18,6 @@ export const InputReview = async (isRating, isReview, foodId, token) => {
         },
       }
     );
-    console.log(res);
     return res;
   } catch (error) {
     console.log(error);
