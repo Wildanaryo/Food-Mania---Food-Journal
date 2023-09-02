@@ -54,6 +54,7 @@ const Sidebar = () => {
   }
 
   const handleLinkProfile = () => {
+    setIsSidebarOpen(false);
     router.push("/profile/user");
   };
 
@@ -85,6 +86,7 @@ const Sidebar = () => {
           <Link
             href={`/`}
             className="flex justify-start items-center hover:bg-slate-800 rounded-3xl py-2 px-4 "
+            onClick={() => setIsSidebarOpen(false)}
           >
             <Image
               src="/home.png"
@@ -98,6 +100,7 @@ const Sidebar = () => {
           <Link
             href={`/all-foods/`}
             className="flex justify-start items-center hover:bg-slate-800 rounded-3xl py-2 px-4 "
+            onClick={() => setIsSidebarOpen(false)}
           >
             <Image
               src="/fork-and-knife-silhouette.png"
@@ -112,6 +115,7 @@ const Sidebar = () => {
             <Link
               href={`/foods/create-food/`}
               className="flex items-center hover:bg-slate-800 rounded-3xl py-2 px-4"
+              onClick={() => setIsSidebarOpen(false)}
             >
               <img
                 src="/add-square-button.png"
