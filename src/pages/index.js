@@ -116,9 +116,9 @@ export default function Home() {
                 <div className="lg:w-3/5 w-11/12">
                   <h2 className="text-4xl mb-2">Super Delicious</h2>
                   <div className="grid grid-cols-3 gap-4">
-                    {foods(1)}
-                    {foods(10)}
-                    {foods(16)}
+                    {foods(2)}
+                    {foods(7)}
+                    {foods(17)}
                   </div>
                 </div>
               </section>
