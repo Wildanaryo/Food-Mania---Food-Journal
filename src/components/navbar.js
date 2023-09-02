@@ -31,7 +31,7 @@ const Navbar = () => {
           <SidebarIcon width={30} fill={"#fff"} />
         </button>
       </div>
-      <nav className="w-full sm:flex hidden flex-col items-center justify-center mt-16">
+      <nav className="w-full sm:flex hidden flex-col items-center justify-center mt-24">
         <div className="lg:w-10/12 w-full h-10 flex flex-row justify-around text-2xl">
           <MenuItem title="CHICKEN" media="hover:border-b-2" />
           <MenuItem
