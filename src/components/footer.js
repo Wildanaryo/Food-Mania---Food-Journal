@@ -13,10 +13,10 @@ const Footer = () => {
             Food Mania<span className="text-lg">mantap</span>
           </div>
           <div>
-            "Embark on a culinary odyssey as we take you on a virtual tour of
-            delectable dishes from around the globe. From comforting classics to
-            innovative creations, our blog showcases a myriad of recipes that
-            cater to all tastes and skill levels."
+            &quot;Embark on a culinary odyssey as we take you on a virtual tour
+            of delectable dishes from around the globe. From comforting classics
+            to innovative creations, our blog showcases a myriad of recipes that
+            cater to all tastes and skill levels.&quot;
           </div>
         </section>
         <section className="grid grid-cols-3 gap-1 md:gap-10 text-sm place-items-center">
