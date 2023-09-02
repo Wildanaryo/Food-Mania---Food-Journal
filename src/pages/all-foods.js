@@ -84,7 +84,7 @@ function Foods() {
                   <Link
                     key={index}
                     href={`foods/${food.id}`}
-                    className="w-11/12 md:w-3/4 grid grid-cols-1 gap-0 hover:outline"
+                    className="w-11/12 md:w-3/4 grid grid-cols-1 xl:grid-cols-2 gap-0 hover:outline"
                   >
                     <div className="h-96 w-full">
                       <img
