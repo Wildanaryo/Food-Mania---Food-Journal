@@ -6,7 +6,7 @@ const SidebarContent = () => {
   const { isSidebarOpen, setIsSidebarOpen } = useContext(FoodContext);
   return (
     <div
-      className={`fixed w-60 md:block h-screen z-10 ${
+      className={`fixed w-60 md:block h-screen z-40 ${
         isSidebarOpen ? "block absolute top-0 left-0 bg-black z-10" : "hidden"
       }`}
     >

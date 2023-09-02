@@ -18,7 +18,7 @@ const Navbar = () => {
         isSidebarOpen ? "opacity-20" : "opacity-100"
       }`}
     >
-      <div className="fixed top-0 w-full flex justify-center bg-black ">
+      <div className="fixed top-0 w-full flex justify-center bg-black z-30 py-4">
         <Link href={"/"}>
           <button className="text-6xl hover:scale-110 transition-all ease-in-out">
             FOOD MANIA<span className="text-xl">mantap</span>
