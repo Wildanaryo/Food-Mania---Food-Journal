@@ -135,7 +135,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center h-screen w-full min-w-[600px]">
+    <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center h-screen w-full min-w-[600px] bg-black">
       <CustomHead title="Food Mania - Login Form" />
       <div className="flex flex-col w-[550px] p-8">
         <label
