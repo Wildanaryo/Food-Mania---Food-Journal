@@ -24,8 +24,8 @@ const Sidebar = () => {
     const res = await LogoutApi(token);
     setToken("");
     if (typeof window !== "undefined") {
-      const itemToken = localStorage.removeItem("token");
-      const roleUser = localStorage.removeItem("role");
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
     }
     setIsSidebarOpen(false);
     router.push("/login");
@@ -132,7 +132,7 @@ const Sidebar = () => {
           {userInfo && (
             <button
               onClick={handleLinkProfile}
-              className="flex mx-auto md:mx-0 items-center hover:bg-slate-800 rounded-3xl py-2 px-4"
+              className="flex items-center hover:bg-slate-800 rounded-3xl py-2 px-4"
             >
               <img
                 src={userInfo.profilePictureUrl}
@@ -146,7 +146,7 @@ const Sidebar = () => {
           )}
 
           <button
-            className="flex mx-auto md:mx-0 hover:bg-red-700 rounded-3xl py-2 px-4"
+            className="flex hover:bg-red-700 rounded-3xl py-2 px-4"
             onClick={handleLogoutAccount}
           >
             <Image

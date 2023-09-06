@@ -36,7 +36,7 @@ function User() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-black text-white">
       <button
         className="bg-orange-800 mb-4 px-4 py-2 rounded w-40"
         onClick={handleJumpHome}

@@ -138,7 +138,7 @@ const FoodDetails = () => {
   }
 
   return (
-    <div className="flex justify-center min-w-[600px]">
+    <div className="flex justify-center min-w-[600px] bg-black text-white">
       <div className="flex w-full">
         {/* Sidebar Content  */}
         <SidebarContent />
