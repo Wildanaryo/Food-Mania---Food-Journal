@@ -31,11 +31,22 @@ const UpdateFood = ({ food }) => {
     event.preventDefault();
 
     try {
+      let newImgUser = imgFood;
       if (imgFood !== food.imageUrl) {
         const uploadedImageUrl = await handleUploadImage();
-        setImgFood(uploadedImageUrl);
+        // setImgFood(uploadedImageUrl);
+        newImgUser = uploadedImageUrl;
+      } else {
+        newImgUser = imgFood;
       }
-      await UpdateFood(nameFood, descFood, ingreFood, imgFood, food.id, token);
+      await UpdateFood(
+        nameFood,
+        descFood,
+        ingreFood,
+        newImgUser,
+        food.id,
+        token
+      );
       router.push(`/foods/${food.id}`);
     } catch (error) {
       console.log(error);
