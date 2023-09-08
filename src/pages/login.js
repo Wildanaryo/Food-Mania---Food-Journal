@@ -149,7 +149,7 @@ function LoginPage() {
             className="sr-only peer"
             checked={login}
           />
-          <span className="w-3/5 h-4/5 bg-blue-600 absolute rounded-3xl left-[8px] top-1 peer-checked:bg-rose-600 peer-checked:left-[56px] transition-all duration-500 grid place-items-center text-xl">
+          <span className="w-3/5 h-4/5 bg-blue-600 absolute rounded-3xl left-[8px] top-1 peer-checked:bg-rose-600 peer-checked:left-[56px] transition-all duration-500 grid place-items-center text-xl text-white">
             {login ? "Login" : "Register"}
           </span>
         </label>
