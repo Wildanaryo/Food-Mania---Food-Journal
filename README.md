@@ -1,38 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Food Mania - Food Blog
 
-## Getting Started
+Welcome to Food Mania - Your Ultimate Destination to Chronicle and Savor Your Culinary Journey!
 
-First, run the development server:
+We understand that food is not just a daily necessity but also an experience that enriches our lives. Our platform is designed for food enthusiasts, both novice and connoisseurs, to celebrate the art of dining.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Food Mania is your personal food diary, where you can document your gastronomic adventures, share your culinary creations, and connect with a community of fellow foodies from around the globe. Whether you're a passionate home cook, a food blogger, or someone who simply loves exploring new flavors, our platform provides the perfect canvas to capture and share your food experiences.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Built With
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- Next js
+- React js
+- Tailwind CSS
+- Axios
+- dibimbing.id - Food Journal API
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Authors
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- [@wildanwicaksono](https://github.com/Wildanaryo)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Account
 
-## Learn More
+if you want to create / delete / edit food you can use this account.
 
-To learn more about Next.js, take a look at the following resources:
+email : Wildanaryo@gmail.com  
+password : qwerty123
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+If you'd like to view our food list, simply sign up or log in to your account.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Live Demo
 
-## Deploy on Vercel
+[Food Mania](https://food-mania-black.vercel.app/)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 About Me
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Hello, I'm Wildan Aryo Wicaksono, a front-end web developer with a relentless passion for exploring the world of web development. Every project I take on is not just an opportunity to create stunning and responsive websites, but also a chance to apply my ever-growing knowledge and skills to deliver outstanding user experiences. I understand the importance of seamless interactions, visually appealing designs, and optimizing performance to ensure that every website I work on is a standout.
