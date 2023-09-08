@@ -140,7 +140,7 @@ function LoginPage() {
       <div className="flex flex-col w-[550px] p-8">
         <label
           htmlFor="check"
-          className="bg-gray-100 absolute top-2 w-40 h-10 rounded-full"
+          className="bg-gray-100 text-white absolute top-2 w-40 h-10 rounded-full"
         >
           <input
             onClick={handleChangeForm}
