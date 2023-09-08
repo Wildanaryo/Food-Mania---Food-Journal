@@ -25,7 +25,7 @@ if you want to create / delete / edit food you can use this account.
 email : Wildanaryo@gmail.com  
 password : qwerty123
 
-If you'd like to view our food list, simply sign up or log in to your account.
+If you only want to view our food list, simply sign up or log in to your account.
 
 ## Live Demo
 
