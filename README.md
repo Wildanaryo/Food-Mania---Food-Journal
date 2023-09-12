@@ -29,7 +29,7 @@ If you only want to view our food list, simply sign up or log in to your account
 
 ## Live Demo
 
-[Food Mania](https://food-mania-black.vercel.app/)
+[Food Mania](https://food-mania-mantap.vercel.app/)
 
 ## 🚀 About Me
 
